@@ -1,0 +1,2 @@
+# GDM
+Meripay/Mericoin submission
