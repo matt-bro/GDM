@@ -18,6 +18,7 @@ final class UserListTVCViewModel: ViewModelType {
 
     struct Input {
         let didLoad: PassthroughSubject<Void, Never>
+        let selectRow: PassthroughSubject<String, Never>
     }
 
     struct Output {
@@ -28,6 +29,7 @@ final class UserListTVCViewModel: ViewModelType {
     struct Dependencies {
         let api: API
         let db: Database
+        let nav: UserListTVCNavigatable
     }
 
     private var cancellables = Set<AnyCancellable>()
@@ -57,7 +59,11 @@ final class UserListTVCViewModel: ViewModelType {
         let followers = $followers.map({
             $0.map({ CompactUserCellViewModel(title: $0.login, avatarUrl: $0.avatarUrl )} )
         }).eraseToAnyPublisher()
-        
+
+        input.selectRow.sink(receiveValue: { _ in
+            self.dependencies.nav.toChat(userId: 1, parnterId: 2)
+        }).store(in: &cancellables)
+
         return Output(finishedLoadingFollowers: loadingState, followers: followers)
     }
 }

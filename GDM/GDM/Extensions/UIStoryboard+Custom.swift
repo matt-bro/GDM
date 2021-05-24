@@ -24,6 +24,14 @@ extension UIStoryboard {
         return vc
     }
 
+    var chatVC: ChatVC {
+        let id = "ChatVC"
+        guard let vc = UIStoryboard.main.instantiateViewController(withIdentifier: id) as? ChatVC else {
+            fatalError(couldNotFindSB(id: id, sbName: UIStoryboard.main.description))
+        }
+        return vc
+    }
+
     private func couldNotFindSB(id:String, sbName: String) -> String {
         "Couldn't find \(id) in storyboard named \(sbName)"
     }

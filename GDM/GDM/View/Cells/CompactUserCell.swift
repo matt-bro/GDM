@@ -32,9 +32,9 @@ class CompactUserCell: UITableViewCell {
     func setupViewModel() {
         self.textLabel?.text = viewModel?.title
         if let avatarUrl = viewModel?.avatarUrl {
-            self.imageView?.loadImageUsingCacheWithURLString(avatarUrl.absoluteString, placeHolder: #imageLiteral(resourceName: "ic_warning_black_bc"), completion: { [unowned self] succes in
-                self.imageView?.applyCircleShape()
-            })
+//            self.imageView?.loadImageUsingCacheWithURLString(avatarUrl.absoluteString, placeHolder: #imageLiteral(resourceName: "ic_warning_black_bc"), completion: { [unowned self] succes in
+//                self.imageView?.applyCircleShape()
+//            })
         }
     }
     

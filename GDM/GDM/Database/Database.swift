@@ -13,6 +13,7 @@ protocol DatabaseReadable {
 
 protocol DatabaseSavable {
     func saveUsers(_ userResponses: [UserResponse])
+    func saveMessage(message:String, fromId: Int, toId: Int, date: Date)
 }
 
 class Database: DatabaseReadable, DatabaseSavable {
@@ -20,51 +21,8 @@ class Database: DatabaseReadable, DatabaseSavable {
     static let shared = Database()
 
     ///Initially fills our database with a local json if needed
-    func inititalSetup() {
-//        let  jsonPath = Bundle.main.path(forResource: "initial-data", ofType: "json")
-//
-//        guard self.getQuotes().isEmpty else {
-//            return
-//        }
-//
-//        do {
-//            let decoder = JSONDecoder()
-//            decoder.dateDecodingStrategy = .secondsSince1970
-//            let data = try Data(contentsOf: URL(fileURLWithPath: jsonPath!), options: .mappedIfSafe)
-//            let jsonResult = try decoder.decode(CurrencyResponse.self, from: data)
-//            UserDefaults.standard.lastMetaDataDate = Date()
-//            UserDefaults.standard.quoteDataDate = jsonResult.timestamp
-//            self.saveQuotes(quotes: jsonResult.quotes)
-//        } catch {
-//            fatalError("could not setup database")
-//        }
-    }
+    func inititalSetup() {}
 
-    ///Save our users
-    func saveQuotes(quotes: [String: Double]) {
-//        //I don't want to check for update/insert so I delete all entries before
-//        self.deleteAllQuotes()
-//
-//        let managedContext = self.persistentContainer.viewContext
-//        for quote in quotes {
-//            let e = Currency(context: managedContext)
-//            e.id = quote.key
-//            e.code = quote.key
-//
-//            //the quote key seems to be in format e.g. USDUSD, USDEUR
-//            //I assume I can cut the first 3 characters to get the clean currency code
-//            if quote.key.count >= 6 {
-//                e.country = quote.key[3...5]
-//            } else {
-//                e.country = quote.key
-//            }
-//
-//            e.value = quote.value
-//            e.sign = getSymbol(forCurrencyCode: e.country ?? "") ?? ""
-//            e.image = getCountryImage(forCurrencyCode: e.country)?.pngData()
-//        }
-//        self.saveContext()
-    }
 
     func saveUsers(_ userResponses: [UserResponse]) {
         //I don't want to check for update/insert so I delete all entries before
@@ -81,7 +39,35 @@ class Database: DatabaseReadable, DatabaseSavable {
         self.saveContext()
     }
 
-    ///Deletes all quotes in database
+    func saveMessage(message:String, fromId: Int, toId: Int, date: Date = Date()) {
+        let managedContext = self.persistentContainer.viewContext
+        let e = MessageEntity(context: managedContext)
+        e.sendDate = date
+        e.fromId = Int64(fromId)
+        e.toId = Int64(toId)
+        e.text = message
+        self.saveContext()
+    }
+
+    func getMessages(forUserId id: Int, partnerId: Int, afterDate date: Date? = nil) -> [MessageEntity] {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "MessageEntity")
+        let pred1 = NSPredicate(format: "fromId == \(id) && toId == \(partnerId)")
+        let pred2 = NSPredicate(format: "fromId == \(partnerId) && toId == \(id)")
+        let compoundPred = NSCompoundPredicate.init(orPredicateWithSubpredicates: [pred1, pred2])
+        let sort = NSSortDescriptor(key: "sendDate", ascending: true)
+        request.sortDescriptors = [sort]
+        request.predicate = compoundPred
+        request.returnsObjectsAsFaults = false
+        do {
+            let result = try self.persistentContainer.viewContext.fetch(request)
+            return result as? [MessageEntity] ?? []
+        } catch {
+            print("Failed")
+        }
+        return []
+    }
+
+    ///Deletes all users in database
     func deleteAllUsers() {
         let context = self.persistentContainer.viewContext
         let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "UserEntity")
@@ -94,7 +80,20 @@ class Database: DatabaseReadable, DatabaseSavable {
         }
     }
 
-    ///Return all quotes sorted by country
+    ///Deletes all messages in database
+    func deleteAllMessages() {
+        let context = self.persistentContainer.viewContext
+        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "MessageEntity")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
+        do {
+            try context.execute(deleteRequest)
+            try context.save()
+        } catch {
+            print ("There was an error")
+        }
+    }
+
+    ///Return all followers sorted by id
     func getFollowers(_ userHandle:String? = nil) -> [UserEntity] {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "UserEntity")
         let sort = NSSortDescriptor(key: "id", ascending: true)

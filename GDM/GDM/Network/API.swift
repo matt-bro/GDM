@@ -46,6 +46,7 @@ class API: APIProtocol {
 
     static let shared = API()
     let networkActivityPublisher = PassthroughSubject<Bool, Never>()
+    let receivedMessagePublisher = PassthroughSubject<String, Never>()
 
     /// Get a list of quotes from the live service
     ///
@@ -89,10 +90,29 @@ class API: APIProtocol {
             }
             .decode(type: [UserResponse].self, decoder: decoder)
             .handleEvents(receiveOutput: {
-                print($0)
+                //print($0)
                 database?.saveUsers($0)
                 defaults?.lastMetaDataDate = Date()
             })
             .eraseToAnyPublisher()
+    }
+
+    func send(message: String, toId: Int, date:Date = Date(), _ database: DatabaseSavable? = nil) -> AnyPublisher<String, Never> {
+        //self.receivedMessagePublisher.send(self.randomString(length: 5))
+        return Just("")
+            //.delay(for: 2, scheduler: RunLoop.main)
+            .handleEvents(receiveSubscription: { _ in
+                database?.saveMessage(message: message, fromId: 111, toId: toId, date: date)
+                self.receivedMessagePublisher.send(message)
+            }).eraseToAnyPublisher()
+    }
+
+    func receivedMessage() -> AnyPublisher<String, Never> {
+        return self.receivedMessagePublisher.eraseToAnyPublisher()
+    }
+
+    func randomString(length: Int) -> String {
+      let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+      return String((0..<length).map{ _ in letters.randomElement()! })
     }
 }
