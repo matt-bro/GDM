@@ -19,7 +19,7 @@ jobs:
     - name: Run unit tests
       run: |
         set -o pipefail && \
-        xcodebuild -project GDM.xcodeproj \
+        xcodebuild -project GDM/GDM.xcodeproj \
         -scheme GDM \
         -destination "${destination}" \
         test | xcpretty
