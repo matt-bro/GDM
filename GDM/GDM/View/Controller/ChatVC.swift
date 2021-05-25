@@ -82,7 +82,7 @@ class ChatVC: UIViewController {
         let keyboardFrame: CGRect = (info[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
 
         UIView.animate(withDuration: 0.2, animations: { () -> Void in
-                self.inputContainerBottomSpace.constant = keyboardFrame.size.height + 20
+                self.inputContainerBottomSpace.constant = keyboardFrame.size.height + 10
 
             })
     }

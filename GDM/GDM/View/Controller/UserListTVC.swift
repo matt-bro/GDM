@@ -14,6 +14,7 @@ class UserListTVC: UITableViewController {
     private let didLoad = PassthroughSubject<Void, Never>()
     private let selectRow = PassthroughSubject<Int, Never>()
     private var cancellables = [AnyCancellable]()
+    private var emptyView: UIView?
     private var dataSource: GenericDataSource<CompactUserCell, CompactUserCellViewModel>? {
         didSet {
             self.tableView.reloadData()
@@ -44,6 +45,8 @@ class UserListTVC: UITableViewController {
             cell.viewModel = vm
         })
         self.tableView.dataSource = dataSource
+
+        self.emptyView = EmptyView.noFollowers()
     }
 
     func bindViewModel() {
@@ -57,7 +60,21 @@ class UserListTVC: UITableViewController {
         output?.followers.sink(receiveValue: { [unowned self] followers in
             self.dataSource?.items = followers
             self.tableView.reloadData()
+            self.showEmptyView(show: followers.count == 0)
         }).store(in: &cancellables)
+    }
+
+    func showEmptyView(show: Bool) {
+        guard let emptyView = self.emptyView else {
+            return
+        }
+        if show {
+            self.tableView.backgroundView = emptyView
+            self.tableView.separatorColor = .clear
+        } else {
+            self.tableView.backgroundView = nil
+            self.tableView.separatorColor = .lightGray
+        }
     }
 }
 

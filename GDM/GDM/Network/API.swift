@@ -123,7 +123,6 @@ class API: APIProtocol {
                 return $0
             })
             .eraseToAnyPublisher()
-        //return self.receivedMessagePublisher.eraseToAnyPublisher()
     }
 
     func randomString(length: Int) -> String {
@@ -132,16 +131,18 @@ class API: APIProtocol {
     }
 
     func dummyReplyJSONString(message: String = "") -> String {
+        let m = MessageResponse.init(message: "\(message) \(message)")
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
 
-    //    let m = MessageResponse.init(message: "\(message) \(message)")
-
-        #warning("fix, might break with special chars")
-        return """
-        {
-            "message": "\(message) \(message)"
+        do {
+            let jsonData = try encoder.encode(m)
+            if let jsonString = String(data: jsonData, encoding: .utf8) {
+                return jsonString
+            }
+        } catch {
+            print(error.localizedDescription)
         }
-        """
-
-
+        return ""
     }
 }
