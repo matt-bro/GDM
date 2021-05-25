@@ -73,12 +73,19 @@ class ChatVC: UIViewController {
                 "text: \(message.text ?? ""); from: \(message.fromId); \(message.toId)"
             })
         }).sink(receiveValue: {
-            self.dataSource?.items = $0
-            self.tableView.reloadData()
-            self.scrollToBottom()
+            self.updateDataSource(items: $0)
+        }).store(in: &cancellables)
 
+        output.updateMessages.sink(receiveValue: {
+            _ in
         }).store(in: &cancellables)
         
+    }
+
+    func updateDataSource(items:[String]) {
+        self.dataSource?.items = items
+        self.tableView.reloadData()
+        self.scrollToBottom()
     }
 
     @objc func keyboardWillShow(notification:NSNotification) {

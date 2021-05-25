@@ -47,6 +47,7 @@ class API: APIProtocol {
     static let shared = API()
     let networkActivityPublisher = PassthroughSubject<Bool, Never>()
     let receivedMessagePublisher = PassthroughSubject<String, Never>()
+    @Published var receivedDate: Date?
 
     /// Get a list of quotes from the live service
     ///
@@ -97,22 +98,50 @@ class API: APIProtocol {
             .eraseToAnyPublisher()
     }
 
-    func send(message: String, toId: Int, date:Date = Date(), _ database: DatabaseSavable? = nil) -> AnyPublisher<String, Never> {
+    func send(message: String, toId: Int, date:Date = Date(), _ database: DatabaseSavable? = nil) -> AnyPublisher<String, Error> {
         //self.receivedMessagePublisher.send(self.randomString(length: 5))
         return Just("")
             //.delay(for: 2, scheduler: RunLoop.main)
             .handleEvents(receiveSubscription: { _ in
-                database?.saveMessage(message: message, fromId: 111, toId: toId, date: date)
+                database?.saveMessage(message: message, fromId: AppSession.shared.currentUserId, toId: toId, date: date)
                 self.receivedMessagePublisher.send(message)
-            }).eraseToAnyPublisher()
+                self.receivedDate = Date()
+            }).flatMap({ _ in
+                self.receivedMessage(message, toId: toId, date: date, database)
+            }).map({ $0.message }).eraseToAnyPublisher()
     }
 
-    func receivedMessage() -> AnyPublisher<String, Never> {
-        return self.receivedMessagePublisher.eraseToAnyPublisher()
+    func receivedMessage(_ message: String = "",  toId: Int, date:Date = Date(), _ database: DatabaseSavable? = nil) -> AnyPublisher<MessageResponse, Error> {
+        return Just(self.dummyReplyJSONString(message: message))
+            .compactMap({$0.data(using: .utf8)})
+            .delay(for: 3, scheduler: RunLoop.main)
+            .decode(type: MessageResponse.self, decoder: JSONDecoder())
+            .handleEvents(receiveSubscription: {
+                _ in
+            }).map({
+                Database.shared.saveMessage(message: $0.message, fromId:toId , toId: AppSession.shared.currentUserId, date: Date())
+                return $0
+            })
+            .eraseToAnyPublisher()
+        //return self.receivedMessagePublisher.eraseToAnyPublisher()
     }
 
     func randomString(length: Int) -> String {
       let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
       return String((0..<length).map{ _ in letters.randomElement()! })
+    }
+
+    func dummyReplyJSONString(message: String = "") -> String {
+
+    //    let m = MessageResponse.init(message: "\(message) \(message)")
+
+        #warning("fix, might break with special chars")
+        return """
+        {
+            "message": "\(message) \(message)"
+        }
+        """
+
+
     }
 }

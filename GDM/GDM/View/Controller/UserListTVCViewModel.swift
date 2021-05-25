@@ -18,7 +18,7 @@ final class UserListTVCViewModel: ViewModelType {
 
     struct Input {
         let didLoad: PassthroughSubject<Void, Never>
-        let selectRow: PassthroughSubject<String, Never>
+        let selectRow: PassthroughSubject<Int, Never>
     }
 
     struct Output {
@@ -44,6 +44,7 @@ final class UserListTVCViewModel: ViewModelType {
     func transform(input: Input) -> Output {
 
         dependencies.api.followers(for: "matt-bro", self.dependencies.db)
+            .dropFirst()
             .sink(receiveCompletion: { completion in
                 print(completion)
 //                self.loadingState = .error(completion)
@@ -53,15 +54,19 @@ final class UserListTVCViewModel: ViewModelType {
             self.loadingState = .finished
         }).store(in: &cancellables)
 
+        self.followers = dependencies.db.getFollowers()
+
         let loadingState = $loadingState.eraseToAnyPublisher()
 
         //lets map our follower user entities to a view model to present it
         let followers = $followers.map({
-            $0.map({ CompactUserCellViewModel(title: $0.login, avatarUrl: $0.avatarUrl )} )
+            $0.map({ CompactUserCellViewModel(id: Int($0.id), title: $0.login, avatarUrl: $0.avatarUrl )} )
         }).eraseToAnyPublisher()
 
-        input.selectRow.sink(receiveValue: { _ in
-            self.dependencies.nav.toChat(userId: 1, parnterId: 2)
+        input.selectRow.sink(receiveValue: { userId in
+            if userId != -1 {
+                self.dependencies.nav.toChat(userId: AppSession.shared.currentUserId, partnerId: userId)
+            }
         }).store(in: &cancellables)
 
         return Output(finishedLoadingFollowers: loadingState, followers: followers)

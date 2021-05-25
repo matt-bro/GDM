@@ -8,7 +8,7 @@
 import UIKit
 
 protocol UserListTVCNavigatable {
-    func toChat(userId: Int, parnterId: Int)
+    func toChat(userId: Int, partnerId: Int)
 }
 
 final class UserListTVCNavigator: UserListTVCNavigatable {
@@ -18,13 +18,16 @@ final class UserListTVCNavigator: UserListTVCNavigatable {
         self.navigationController = navigationController
     }
 
-    func toChat(userId: Int, parnterId: Int) {
+    func toChat(userId: Int, partnerId: Int) {
         let vc = UIStoryboard.main.chatVC
 
-        let dependencies = ChatVCViewModel.Dependencies(
-            api: MockAPI(),
-            db: Database.shared
-        )
+        let api = MockAPI()
+        let db = Database.shared
+        let session = AppSession.shared
+        session.partnerId = partnerId
+
+
+        let dependencies = ChatVCViewModel.Dependencies(api: api, db: db, session: session)
         vc.viewModel = ChatVCViewModel(dependencies: dependencies)
 
         navigationController.pushViewController(vc, animated: true)

@@ -44,6 +44,8 @@
 		C9F986D6265BFB0700AF3F43 /* UserListTVCNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F986D5265BFB0700AF3F43 /* UserListTVCNavigator.swift */; };
 		C9F986DB265BFBE900AF3F43 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F986DA265BFBE900AF3F43 /* ChatVC.swift */; };
 		C9F986E0265BFBF700AF3F43 /* ChatVCViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F986DF265BFBF700AF3F43 /* ChatVCViewModel.swift */; };
+		C9F986E9265D24C400AF3F43 /* AppSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F986E8265D24C400AF3F43 /* AppSession.swift */; };
+		C9F986EE265D2B0300AF3F43 /* AutoReplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F986ED265D2B0300AF3F43 /* AutoReplier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +111,8 @@
 		C9F986D5265BFB0700AF3F43 /* UserListTVCNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListTVCNavigator.swift; sourceTree = "<group>"; };
 		C9F986DA265BFBE900AF3F43 /* ChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
 		C9F986DF265BFBF700AF3F43 /* ChatVCViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVCViewModel.swift; sourceTree = "<group>"; };
+		C9F986E8265D24C400AF3F43 /* AppSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSession.swift; sourceTree = "<group>"; };
+		C9F986ED265D2B0300AF3F43 /* AutoReplier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoReplier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,13 +163,13 @@
 		C9F98625265AF55E00AF3F43 /* GDM */ = {
 			isa = PBXGroup;
 			children = (
+				C9F98666265AFA5C00AF3F43 /* Database */,
+				C9F9865C265AF76500AF3F43 /* Network */,
 				C9F98698265BBACF00AF3F43 /* View */,
 				C9F98694265B9AC500AF3F43 /* Resources */,
 				C9F98689265AFD1D00AF3F43 /* Shared */,
 				C9F98680265AFB7A00AF3F43 /* Localization */,
 				C9F9866C265AFAEA00AF3F43 /* Extensions */,
-				C9F98666265AFA5C00AF3F43 /* Database */,
-				C9F9865C265AF76500AF3F43 /* Network */,
 				C9F98626265AF55E00AF3F43 /* AppDelegate.swift */,
 				C9F98628265AF55E00AF3F43 /* SceneDelegate.swift */,
 				C9F9862A265AF55E00AF3F43 /* ViewController.swift */,
@@ -244,6 +248,8 @@
 			children = (
 				C9F9868A265AFD1D00AF3F43 /* GenericDataSource.swift */,
 				C9F986D0265BDE2100AF3F43 /* ViewModelType.swift */,
+				C9F986E8265D24C400AF3F43 /* AppSession.swift */,
+				C9F986ED265D2B0300AF3F43 /* AutoReplier.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -450,10 +456,12 @@
 				C9F98677265AFAEA00AF3F43 /* String+Custom.swift in Sources */,
 				C9F98662265AFA4600AF3F43 /* MockAPI.swift in Sources */,
 				C9F9867C265AFAEA00AF3F43 /* UI+Localizable.swift in Sources */,
+				C9F986E9265D24C400AF3F43 /* AppSession.swift in Sources */,
 				C9F98629265AF55E00AF3F43 /* SceneDelegate.swift in Sources */,
 				C9F986CC265BDC9900AF3F43 /* UIStoryboard+Custom.swift in Sources */,
 				C9F986BD265BD1A300AF3F43 /* UIImage+Custom.swift in Sources */,
 				C9F98661265AFA4600AF3F43 /* Response.swift in Sources */,
+				C9F986EE265D2B0300AF3F43 /* AutoReplier.swift in Sources */,
 				C9F9867A265AFAEA00AF3F43 /* Userdefaults+Custom.swift in Sources */,
 				C9F986D1265BDE2100AF3F43 /* ViewModelType.swift in Sources */,
 				C9F98668265AFA5C00AF3F43 /* Database.swift in Sources */,

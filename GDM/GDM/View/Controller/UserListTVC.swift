@@ -12,7 +12,7 @@ class UserListTVC: UITableViewController {
 
     private var viewModel:UserListTVCViewModel?
     private let didLoad = PassthroughSubject<Void, Never>()
-    private let selectRow = PassthroughSubject<String, Never>()
+    private let selectRow = PassthroughSubject<Int, Never>()
     private var cancellables = [AnyCancellable]()
     private var dataSource: GenericDataSource<CompactUserCell, CompactUserCellViewModel>? {
         didSet {
@@ -63,8 +63,8 @@ class UserListTVC: UITableViewController {
 
 extension UserListTVC {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let _ = self.dataSource?.items[indexPath.row] {
-            self.selectRow.send("1")
+        if let user = self.dataSource?.items[indexPath.row] {
+            self.selectRow.send(user.id)
         }
     }
 }

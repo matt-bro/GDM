@@ -8,12 +8,14 @@
 import UIKit
 
 final class CompactUserCellViewModel {
+    var id = -1
     //main title
     var title: String?
     //user image
     var avatarUrl: URL?
 
-    init(title: String?, avatarUrl: String?) {
+    init(id: Int, title: String?, avatarUrl: String?) {
+        self.id = id
         self.title = title
 
         if let avatarUrl = avatarUrl {

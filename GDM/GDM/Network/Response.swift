@@ -7,13 +7,10 @@
 
 import Foundation
 
-struct CurrencyResponse: Decodable {
-    var success: Bool
-    var terms: String?
-    var privacy: String?
-    var timestamp: Date?
-    var source: String
-    var quotes: [String: Double] = [:]
+struct MessageResponse: Codable {
+//    var fromId: Int = -1
+//    var toId: Int = -1
+    var message: String
 }
 
 struct UserResponse: Decodable {
