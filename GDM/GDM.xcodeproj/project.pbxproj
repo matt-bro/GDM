@@ -46,6 +46,9 @@
 		C9F986E0265BFBF700AF3F43 /* ChatVCViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F986DF265BFBF700AF3F43 /* ChatVCViewModel.swift */; };
 		C9F986E9265D24C400AF3F43 /* AppSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F986E8265D24C400AF3F43 /* AppSession.swift */; };
 		C9F986EE265D2B0300AF3F43 /* AutoReplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F986ED265D2B0300AF3F43 /* AutoReplier.swift */; };
+		C9F986F8265D433D00AF3F43 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F986F6265D433D00AF3F43 /* MessageCell.swift */; };
+		C9F986F9265D433D00AF3F43 /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9F986F7265D433D00AF3F43 /* MessageCell.xib */; };
+		C9F98701265D523F00AF3F43 /* MessageCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F98700265D523F00AF3F43 /* MessageCellViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,6 +116,9 @@
 		C9F986DF265BFBF700AF3F43 /* ChatVCViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVCViewModel.swift; sourceTree = "<group>"; };
 		C9F986E8265D24C400AF3F43 /* AppSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSession.swift; sourceTree = "<group>"; };
 		C9F986ED265D2B0300AF3F43 /* AutoReplier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoReplier.swift; sourceTree = "<group>"; };
+		C9F986F6265D433D00AF3F43 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		C9F986F7265D433D00AF3F43 /* MessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
+		C9F98700265D523F00AF3F43 /* MessageCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -277,6 +283,9 @@
 				C9F986A8265BBD3900AF3F43 /* CompactUserCell.swift */,
 				C9F986A9265BBD3900AF3F43 /* CompactUserCell.xib */,
 				C9F986AF265BBD5500AF3F43 /* CompactUserCellViewModel.swift */,
+				C9F986F6265D433D00AF3F43 /* MessageCell.swift */,
+				C9F986F7265D433D00AF3F43 /* MessageCell.xib */,
+				C9F98700265D523F00AF3F43 /* MessageCellViewModel.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -412,6 +421,7 @@
 				C9F986B7265BCF4C00AF3F43 /* users.json in Resources */,
 				C9F986AB265BBD3900AF3F43 /* CompactUserCell.xib in Resources */,
 				C9F986B8265BCF4C00AF3F43 /* followers.json in Resources */,
+				C9F986F9265D433D00AF3F43 /* MessageCell.xib in Resources */,
 				C9F98636265AF55F00AF3F43 /* LaunchScreen.storyboard in Resources */,
 				C9F98685265AFB7A00AF3F43 /* Localizable.strings in Resources */,
 				C9F98633265AF55F00AF3F43 /* Assets.xcassets in Resources */,
@@ -446,11 +456,13 @@
 				C9F9862B265AF55E00AF3F43 /* ViewController.swift in Sources */,
 				C9F98627265AF55E00AF3F43 /* AppDelegate.swift in Sources */,
 				C9F98675265AFAEA00AF3F43 /* URL+Custom.swift in Sources */,
+				C9F98701265D523F00AF3F43 /* MessageCellViewModel.swift in Sources */,
 				C9F986E0265BFBF700AF3F43 /* ChatVCViewModel.swift in Sources */,
 				C9F986B0265BBD5500AF3F43 /* CompactUserCellViewModel.swift in Sources */,
 				C9F98678265AFAEA00AF3F43 /* Date+Custom.swift in Sources */,
 				C9F9867B265AFAEA00AF3F43 /* UIControl+Publisher.swift in Sources */,
 				C9F98676265AFAEA00AF3F43 /* CardView.swift in Sources */,
+				C9F986F8265D433D00AF3F43 /* MessageCell.swift in Sources */,
 				C9F9869C265BBB0000AF3F43 /* UserListTVC.swift in Sources */,
 				C9F9868C265AFD1D00AF3F43 /* GenericDataSource.swift in Sources */,
 				C9F98677265AFAEA00AF3F43 /* String+Custom.swift in Sources */,

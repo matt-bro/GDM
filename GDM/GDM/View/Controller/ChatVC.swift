@@ -13,7 +13,7 @@ class ChatVC: UIViewController {
     var viewModel: ChatVCViewModel!
     private let didLoad = PassthroughSubject<Void, Never>()
     private var cancellables = [AnyCancellable]()
-    private var dataSource: GenericDataSource<CompactUserCell, String>?
+    private var dataSource: GenericDataSource<MessageCell, MessageCellViewModel>?
 
    // @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var tableView: UITableView!
@@ -35,18 +35,11 @@ class ChatVC: UIViewController {
     }
 
     func setupTableView() {
-        self.tableView.register(UINib(nibName: CompactUserCell.identifier, bundle: nil), forCellReuseIdentifier: CompactUserCell.identifier)
+        self.tableView.register(UINib(nibName: MessageCell.identifier, bundle: nil), forCellReuseIdentifier: MessageCell.identifier)
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 70.0
-        self.dataSource = GenericDataSource(cellIdentifier: CompactUserCell.identifier, items: [
-            "Test 1",
-            "Test 2",
-            "Test 3",
-            "Test 4",
-            "Test 5",
-            "Test 6"
-        ], configureCell: { (cell, text) in
-            cell.textLabel?.text = text
+        self.dataSource = GenericDataSource(cellIdentifier: MessageCell.identifier, items: [], configureCell: { (cell, vm) in
+            cell.viewModel = vm
         })
         self.tableView.dataSource = dataSource
         self.tableView.reloadData()
@@ -68,11 +61,7 @@ class ChatVC: UIViewController {
             .assign(to: \.isEnabled, on: sendBtn)
             .store(in: &cancellables)
 
-        output.messages.map({ messages in
-            messages.map({ message in
-                "text: \(message.text ?? ""); from: \(message.fromId); \(message.toId)"
-            })
-        }).sink(receiveValue: {
+        output.messages.sink(receiveValue: {
             self.updateDataSource(items: $0)
         }).store(in: &cancellables)
 
@@ -82,7 +71,7 @@ class ChatVC: UIViewController {
         
     }
 
-    func updateDataSource(items:[String]) {
+    func updateDataSource(items:[MessageCellViewModel]) {
         self.dataSource?.items = items
         self.tableView.reloadData()
         self.scrollToBottom()

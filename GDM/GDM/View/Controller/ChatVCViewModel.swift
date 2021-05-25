@@ -18,7 +18,7 @@ final class ChatVCViewModel: ViewModelType {
 
     struct Output {
         let finishedLoadingFollowers: AnyPublisher<LoadingState, Never>
-        let messages: AnyPublisher<[MessageEntity], Never>
+        let messages: AnyPublisher<[MessageCellViewModel], Never>
         let isMessageValid: AnyPublisher<Bool, Never>
         let sendMessage: AnyPublisher<String, Never>
         let updateMessages: AnyPublisher<Void, Never>
@@ -83,6 +83,12 @@ final class ChatVCViewModel: ViewModelType {
             self.messages = self.dependencies.db.getMessages(forUserId: currentUserId, partnerId: partnerId)
         }).store(in: &cancellables)
 
-        return Output(finishedLoadingFollowers: loadingState, messages: $messages.eraseToAnyPublisher(), isMessageValid: isMessageValid, sendMessage: sendMessage, updateMessages: updateMessages)
+        let messages = $messages.map({ messageEntities in
+            messageEntities.map({ e in
+                MessageCellViewModel(id: Int(e.fromId), isMe: (e.fromId == currentUserId), message: e.text, date: e.sendDate)
+            })
+        }).eraseToAnyPublisher()
+
+        return Output(finishedLoadingFollowers: loadingState, messages: messages, isMessageValid: isMessageValid, sendMessage: sendMessage, updateMessages: updateMessages)
     }
 }
