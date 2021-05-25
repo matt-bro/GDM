@@ -65,7 +65,8 @@ final class UserListTVCViewModel: ViewModelType {
 
         input.selectRow.sink(receiveValue: { userId in
             if userId != -1 {
-                self.dependencies.nav.toChat(userId: AppSession.shared.currentUserId, partnerId: userId)
+                let partnerUser = self.dependencies.db.user(forId: userId)
+                self.dependencies.nav.toChat(userId: AppSession.shared.currentUserId, partnerId: userId, partnerName: partnerUser?.login)
             }
         }).store(in: &cancellables)
 

@@ -39,6 +39,20 @@ class Database: DatabaseReadable, DatabaseSavable {
         self.saveContext()
     }
 
+    func user(forId id: Int) -> UserEntity? {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "UserEntity")
+        let pred = NSPredicate(format: "id == \(id)")
+        request.predicate = pred
+        request.returnsObjectsAsFaults = false
+        do {
+            let result = try self.persistentContainer.viewContext.fetch(request)
+            return result.first as? UserEntity
+        } catch {
+            print("Failed")
+        }
+        return nil
+    }
+
     func saveMessage(message:String, fromId: Int, toId: Int, date: Date = Date()) {
         let managedContext = self.persistentContainer.viewContext
         let e = MessageEntity(context: managedContext)

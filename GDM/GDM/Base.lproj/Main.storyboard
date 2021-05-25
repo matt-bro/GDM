@@ -36,7 +36,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ASl-P0-pyN">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="bottom" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="p6r-SC-NiA">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="720"/>
@@ -126,7 +126,6 @@
                             <constraint firstItem="d6T-EK-hkQ" firstAttribute="bottom" secondItem="ASl-P0-pyN" secondAttribute="bottom" id="qgd-Mh-CtU"/>
                         </constraints>
                     </view>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="scrollView" destination="ASl-P0-pyN" id="vYT-Uf-fRi"/>
                     </connections>
@@ -202,7 +201,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="249" verticalCompressionResistancePriority="749" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3rJ-Og-5UQ">
-                                <rect key="frame" x="0.0" y="44" width="414" height="643.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="687.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="k3I-LZ-OYz" id="90d-us-Nk8"/>
@@ -222,7 +221,6 @@
                             <constraint firstItem="sOp-T4-Lva" firstAttribute="trailing" secondItem="3rJ-Og-5UQ" secondAttribute="trailing" id="yZR-Jh-RWT"/>
                         </constraints>
                     </view>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="inputContainerBottomSpace" destination="9dk-Rz-ZYS" id="KkE-7f-bss"/>
                         <outlet property="messageTV" destination="F7I-Pj-ha0" id="I96-VX-4ek"/>
@@ -239,8 +237,8 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ixe-0i-c1u" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="Qkm-Uo-16m">
-                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Qkm-Uo-16m">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
