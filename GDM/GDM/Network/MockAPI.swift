@@ -19,10 +19,14 @@ class MockAPI: API {
             let data = try Data(contentsOf: URL(fileURLWithPath: jsonPath!), options: .mappedIfSafe)
             let jsonResult = try decoder.decode([UserResponse].self, from: data)
 
-            defaults?.lastMetaDataDate = Date()
-            database?.saveUsers(jsonResult)
-
-            return Just(jsonResult).setFailureType(to: Error.self).eraseToAnyPublisher()
+            return Just(jsonResult)
+                .delay(for: 3.0, scheduler: RunLoop.main)
+                .setFailureType(to: Error.self)
+                //.tryMap({ _ in throw ServiceError.rateLimit })
+                .handleEvents(receiveSubscription: {_ in}, receiveOutput: {_ in }, receiveCompletion: { _ in
+                    defaults?.lastMetaDataDate = Date()
+                    database?.saveUsers(jsonResult)
+                }).eraseToAnyPublisher()
         } catch {
             fatalError("could not load")
         }

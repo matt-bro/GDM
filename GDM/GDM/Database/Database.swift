@@ -26,11 +26,9 @@ class Database: DatabaseReadable, DatabaseSavable {
 
     func saveUsers(_ userResponses: [UserResponse]) {
         //I don't want to check for update/insert so I delete all entries before
-        self.deleteAllUsers()
-
         let managedContext = self.persistentContainer.viewContext
         for ur in userResponses {
-            let e = UserEntity(context: managedContext)
+            let e = user(forId: ur.id) ?? UserEntity(context: managedContext)
             e.id = Int64(ur.id)
             e.nodeId = ur.node_id
             e.login = ur.login
@@ -60,6 +58,11 @@ class Database: DatabaseReadable, DatabaseSavable {
         e.fromId = Int64(fromId)
         e.toId = Int64(toId)
         e.text = message
+
+        let user1 = user(forId: fromId)
+        user1?.lastMessageDate = date
+        user1?.lastMessagePrev = message
+
         self.saveContext()
     }
 
@@ -110,8 +113,9 @@ class Database: DatabaseReadable, DatabaseSavable {
     ///Return all followers sorted by id
     func getFollowers(_ userHandle:String? = nil) -> [UserEntity] {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "UserEntity")
-        let sort = NSSortDescriptor(key: "id", ascending: true)
-        request.sortDescriptors = [sort]
+        let sort1 = NSSortDescriptor(key: "id", ascending: true)
+        let sort2 = NSSortDescriptor(key: "lastMessageDate", ascending: false)
+        request.sortDescriptors = [sort2, sort1]
         request.returnsObjectsAsFaults = false
         do {
             let result = try self.persistentContainer.viewContext.fetch(request)

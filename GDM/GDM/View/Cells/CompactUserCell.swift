@@ -11,6 +11,13 @@ class CompactUserCell: UITableViewCell {
 
     static let identifier = "CompactUserCell"
 
+    @IBOutlet var avatarIV: UIImageView!
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var subtitleLabel: UILabel!
+    @IBOutlet var dateLabel: UILabel!
+    @IBOutlet var stackView: UIStackView!
+    
+
     var viewModel: CompactUserCellViewModel? {
         didSet {
             setupViewModel()
@@ -21,7 +28,7 @@ class CompactUserCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.imageView?.applyCircleShape()
+
         self.accessoryType = .disclosureIndicator
     }
 
@@ -30,12 +37,16 @@ class CompactUserCell: UITableViewCell {
     }
 
     func setupViewModel() {
-        self.textLabel?.text = viewModel?.title
-        if let avatarUrl = viewModel?.avatarUrl {
-            self.imageView?.loadImageUsingCacheWithURLString(avatarUrl.absoluteString, placeHolder: #imageLiteral(resourceName: "ic_warning_black_bc"), completion: { [unowned self] succes in
-                self.imageView?.applyCircleShape()
-            })
-        }
+        self.titleLabel?.text = viewModel?.title
+        self.subtitleLabel?.text = viewModel?.subtitle
+        self.dateLabel?.text = viewModel?.date
+        self.stackView.isHidden = (viewModel?.subtitle?.isEmpty ?? true)
+        //self.avatarIV?.applyCircleShape()
+//        if let avatarUrl = viewModel?.avatarUrl {
+//            self.avatarIV?.loadImageUsingCacheWithURLString(avatarUrl.absoluteString, placeHolder: #imageLiteral(resourceName: "avatar"), completion: { [unowned self] succes in
+//                self.avatarIV?.applyCircleShape()
+//            })
+//        }
     }
     
 }

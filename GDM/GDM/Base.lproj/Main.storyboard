@@ -3,30 +3,12 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--User ListTVC-->
-        <scene sceneID="fjo-mn-pGh">
-            <objects>
-                <tableViewController id="qeF-R4-Kva" customClass="UserListTVC" customModule="GDM" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="xKQ-9d-cKz">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <connections>
-                            <outlet property="dataSource" destination="qeF-R4-Kva" id="ksC-x1-NEl"/>
-                            <outlet property="delegate" destination="qeF-R4-Kva" id="EzC-AU-ZI3"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="OcG-xD-CJp"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="O5a-Y1-faL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1050.7246376811595" y="-544.41964285714278"/>
-        </scene>
         <!--ChatVC-->
         <scene sceneID="OqG-IZ-WvR">
             <objects>
@@ -140,6 +122,7 @@
                 <viewController storyboardIdentifier="ChatVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="k3I-LZ-OYz" customClass="ChatVC" customModule="GDM" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="08T-no-Ju6">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eqf-QX-uqm" userLabel="InputContainer">
                                 <rect key="frame" x="0.0" y="690.5" width="414" height="171.5"/>
@@ -213,7 +196,7 @@
                         <constraints>
                             <constraint firstItem="sOp-T4-Lva" firstAttribute="top" secondItem="3rJ-Og-5UQ" secondAttribute="top" constant="44" id="4wS-ho-U8R"/>
                             <constraint firstItem="3rJ-Og-5UQ" firstAttribute="leading" secondItem="sOp-T4-Lva" secondAttribute="leading" id="IwC-6V-9Ia"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="Eqf-QX-uqm" secondAttribute="bottom" id="S3N-mV-nqu"/>
+                            <constraint firstItem="sOp-T4-Lva" firstAttribute="bottom" secondItem="Eqf-QX-uqm" secondAttribute="bottom" id="TNz-xJ-xJb"/>
                             <constraint firstItem="Eqf-QX-uqm" firstAttribute="leading" secondItem="sOp-T4-Lva" secondAttribute="leading" id="Wip-Uf-fn6"/>
                             <constraint firstItem="Eqf-QX-uqm" firstAttribute="trailing" secondItem="sOp-T4-Lva" secondAttribute="trailing" id="j9S-gF-yET"/>
                             <constraint firstItem="Eqf-QX-uqm" firstAttribute="top" secondItem="3rJ-Og-5UQ" secondAttribute="bottom" id="kbj-VM-nx5"/>
@@ -272,16 +255,56 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="qeF-R4-Kva" kind="relationship" relationship="rootViewController" id="R9a-si-UPo"/>
+                        <segue destination="i7O-e9-uYz" kind="relationship" relationship="rootViewController" id="856-Z9-cSk"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YKn-WM-8lG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="140.57971014492756" y="-544.41964285714278"/>
         </scene>
+        <!--Github DM-->
+        <scene sceneID="ypk-4W-zDh">
+            <objects>
+                <viewController storyboardIdentifier="userListTVC" id="i7O-e9-uYz" customClass="UserListTVC" customModule="GDM" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="32s-MA-Joa">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NCm-ak-WSI">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="i7O-e9-uYz" id="fTW-ae-Nnp"/>
+                                    <outlet property="delegate" destination="i7O-e9-uYz" id="BRB-Q8-MaM"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="gUA-fb-sbk"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="NCm-ak-WSI" firstAttribute="leading" secondItem="gUA-fb-sbk" secondAttribute="leading" id="GOD-Eb-h5E"/>
+                            <constraint firstItem="gUA-fb-sbk" firstAttribute="bottom" secondItem="NCm-ak-WSI" secondAttribute="bottom" id="Sn6-Ek-uui"/>
+                            <constraint firstItem="NCm-ak-WSI" firstAttribute="top" secondItem="gUA-fb-sbk" secondAttribute="top" id="WWR-8T-gyJ"/>
+                            <constraint firstItem="gUA-fb-sbk" firstAttribute="trailing" secondItem="NCm-ak-WSI" secondAttribute="trailing" id="h8S-p7-tdT"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Github DM" id="HPj-WJ-GYJ">
+                        <barButtonItem key="rightBarButtonItem" id="gnW-k5-qAE">
+                            <imageReference key="image" image="person.circle" catalog="system" symbolScale="default"/>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="NCm-ak-WSI" id="f3U-xT-IkG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Eog-WU-MLy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="977" y="-535"/>
+        </scene>
     </scenes>
     <resources>
         <image name="paperplane.fill" catalog="system" width="128" height="118"/>
+        <image name="person.circle" catalog="system" width="128" height="121"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

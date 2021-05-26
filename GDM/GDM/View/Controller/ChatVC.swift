@@ -32,6 +32,8 @@ class ChatVC: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:UIResponder.keyboardWillHideNotification, object: nil)
 
         didLoad.send()
+
+        showToast(message: "HELLO")
     }
 
     func setupTableView() {

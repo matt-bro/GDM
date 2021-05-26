@@ -79,7 +79,7 @@ extension EmptyView {
     static func noFollowers() -> UIView {
         let emptyView = EmptyView(frame: .zero)
         emptyView.titleLabel?.text = "There are no followers here yet :(".ll
-        emptyView.subTitleLabel?.text = "Maybe try to reload with pull to refresh".ll
+        emptyView.subTitleLabel?.text = "Maybe try to refresh?".ll
         emptyView.logo?.image = #imageLiteral(resourceName: "no-wifi")
         return emptyView
     }

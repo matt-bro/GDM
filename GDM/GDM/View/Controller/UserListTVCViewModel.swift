@@ -19,6 +19,9 @@ final class UserListTVCViewModel: ViewModelType {
     struct Input {
         let didLoad: PassthroughSubject<Void, Never>
         let selectRow: PassthroughSubject<Int, Never>
+        //Refresh our data
+        let refresh: PassthroughSubject<Bool, Never>
+        let didAppear: PassthroughSubject<Void, Never>
     }
 
     struct Output {
@@ -30,6 +33,7 @@ final class UserListTVCViewModel: ViewModelType {
         let api: API
         let db: Database
         let nav: UserListTVCNavigatable
+        let session: AppSessionProtocol
     }
 
     private var cancellables = Set<AnyCancellable>()
@@ -43,24 +47,53 @@ final class UserListTVCViewModel: ViewModelType {
 
     func transform(input: Input) -> Output {
 
-        dependencies.api.followers(for: "matt-bro", self.dependencies.db)
-            .dropFirst()
-            .sink(receiveCompletion: { completion in
-                print(completion)
-//                self.loadingState = .error(completion)
+
+        let loadingState = $loadingState.eraseToAnyPublisher()
+
+        input.refresh.map({ _ -> AnyPublisher<[UserResponse], Error> in
+            self.loadingState = .loading
+            return self.dependencies.api.followers(for: self.dependencies.session.currentUserLogin, self.dependencies.db)
+        })
+        .switchToLatest()
+        .sink(receiveCompletion: { completion in
+            switch completion {
+                                case .failure(let error): self.loadingState = .error(error)
+                                case .finished: print("Publisher is finished")
+                                }
+
         }, receiveValue: { [unowned self] value in
             print(value)
             self.followers = dependencies.db.getFollowers()
             self.loadingState = .finished
         }).store(in: &cancellables)
 
-        self.followers = dependencies.db.getFollowers()
+        input.refresh.send(true)
+//
+//        dependencies.api.followers(for: dependencies.session.currentUserLogin, self.dependencies.db)
+//            .sink(receiveCompletion: { completion in
+//                print(completion)
+////                self.loadingState = .error(completion)
+//        }, receiveValue: { [unowned self] value in
+//            print(value)
+//            self.followers = dependencies.db.getFollowers()
+//            self.loadingState = .finished
+//        }).store(in: &cancellables)
 
-        let loadingState = $loadingState.eraseToAnyPublisher()
+        input.didLoad.combineLatest(input.didAppear).sink(receiveValue: {
+            _ in
+
+            self.followers = self.dependencies.db.getFollowers()
+            if self.followers.count == 0 {
+                self.loadingState = .empty
+            }
+
+        }).store(in: &cancellables)
 
         //lets map our follower user entities to a view model to present it
         let followers = $followers.map({
-            $0.map({ CompactUserCellViewModel(id: Int($0.id), title: $0.login, avatarUrl: $0.avatarUrl )} )
+            $0.map({
+                CompactUserCellViewModel(id: Int($0.id), title: $0.login, avatarUrl: $0.avatarUrl, subtitle: $0.lastMessagePrev, date: $0.lastMessageDate?.string )
+            })
         }).eraseToAnyPublisher()
 
         input.selectRow.sink(receiveValue: { userId in

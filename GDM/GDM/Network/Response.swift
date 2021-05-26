@@ -8,8 +8,6 @@
 import Foundation
 
 struct MessageResponse: Codable {
-//    var fromId: Int = -1
-//    var toId: Int = -1
     var message: String
 }
 

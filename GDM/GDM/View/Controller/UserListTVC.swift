@@ -8,17 +8,38 @@
 import UIKit
 import Combine
 
-class UserListTVC: UITableViewController {
+class UserListTVC: UIViewController {
 
-    private var viewModel:UserListTVCViewModel?
+
+    @IBOutlet var tableView: UITableView!
+    private var viewModel: UserListTVCViewModel?
     private let didLoad = PassthroughSubject<Void, Never>()
+    private let didAppear = PassthroughSubject<Void, Never>()
     private let selectRow = PassthroughSubject<Int, Never>()
+    private let refresh = PassthroughSubject<Bool, Never>()
     private var cancellables = [AnyCancellable]()
     private var emptyView: UIView?
-    private var dataSource: GenericDataSource<CompactUserCell, CompactUserCellViewModel>? {
-        didSet {
-            self.tableView.reloadData()
-        }
+    private var dataSource: GenericDataSource<CompactUserCell, CompactUserCellViewModel>?
+
+    var activityBarBtn:UIBarItem {
+        let activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        let barButton = UIBarButtonItem(customView: activityIndicator)
+        activityIndicator.startAnimating()
+        return barButton
+    }
+
+    let activityIndicator = UIActivityIndicatorView(style: .medium)
+
+
+    func showIndicator() {
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: self.activityIndicator)
+        self.activityIndicator.isHidden = false
+        self.activityIndicator.startAnimating()
+    }
+
+    func hideIndicator() {
+        self.activityIndicator.stopAnimating()
+        self.navigationItem.leftBarButtonItem = nil
     }
 
     override func viewDidLoad() {
@@ -27,14 +48,25 @@ class UserListTVC: UITableViewController {
         self.title = "main.title".ll
 
         let dependencies = UserListTVCViewModel.Dependencies(
-            api: MockAPI(),
+            api: API.shared,
             db: Database.shared,
-            nav: UserListTVCNavigator(navigationController: self.navigationController!)
+            nav: UserListTVCNavigator(navigationController: self.navigationController!),
+            session: AppSession.shared
         )
+        self.title = "@"+AppSession.shared.currentUserLogin
+
         self.viewModel = UserListTVCViewModel(dependencies: dependencies)
 
         self.setupTableView()
         self.bindViewModel()
+
+        self.activityIndicator.hidesWhenStopped = true
+        self.didLoad.send()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.didAppear.send()
     }
 
     func setupTableView() {
@@ -50,10 +82,24 @@ class UserListTVC: UITableViewController {
     }
 
     func bindViewModel() {
-        let input = UserListTVCViewModel.Input(didLoad: didLoad, selectRow: selectRow)
+        let input = UserListTVCViewModel.Input(didLoad: didLoad, selectRow: selectRow, refresh: refresh, didAppear: didAppear)
         let output = viewModel?.transform(input: input)
 
         output?.finishedLoadingFollowers.sink(receiveValue: {
+            switch $0 {
+            case .finished:
+                self.hideIndicator()
+                self.showEmptyView(show: false)
+            case .error(let e):
+                self.hideIndicator()
+                self.showToast(message:"\("loading.error".ll)\(e.localizedDescription)")
+                //self.showEmptyView(show: true, error: e)
+            case .loading:
+                self.showIndicator()
+            case .empty:
+                //self.hideIndicator()
+                self.showEmptyView(show: true)
+            }
             print($0)
         }).store(in: &cancellables)
 
@@ -64,7 +110,7 @@ class UserListTVC: UITableViewController {
         }).store(in: &cancellables)
     }
 
-    func showEmptyView(show: Bool) {
+    func showEmptyView(show: Bool, error: Error? = nil) {
         guard let emptyView = self.emptyView else {
             return
         }
@@ -78,8 +124,8 @@ class UserListTVC: UITableViewController {
     }
 }
 
-extension UserListTVC {
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+extension UserListTVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let user = self.dataSource?.items[indexPath.row] {
             self.selectRow.send(user.id)
         }
