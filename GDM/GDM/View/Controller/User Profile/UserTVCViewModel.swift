@@ -14,12 +14,10 @@ final class UserTVCViewModel {
         //Refresh our data
         let refresh: PassthroughSubject<Bool, Never>
         let didAppear: PassthroughSubject<Void, Never>
+        let pressedDone: PassthroughSubject<Void, Never>
     }
 
     struct Output {
-//        let finishedLoadingFollowers: AnyPublisher<LoadingState, Never>
-//        let followers: AnyPublisher<[CompactUserCellViewModel], Never>
-        //let finishedLoading: AnyPublisher<LoadingState, Never>
         let profileCardViewModel: AnyPublisher<ProfileCardViewModel, Never>
     }
 
@@ -58,6 +56,10 @@ final class UserTVCViewModel {
         let profileCardViewModel = self.$currentUser.map({
             ProfileCardViewModel(userHandle: $0?.login, name: $0?.name, followers: Int($0?.followers ?? 0), following: Int($0?.following ?? 0), avatarUrl: $0?.avatarUrl)
         }).eraseToAnyPublisher()
+
+        input.pressedDone.sink(receiveValue: {
+            self.dependencies.nav.done()
+        }).store(in: &cancellables)
 
         return Output(profileCardViewModel: profileCardViewModel)
     }

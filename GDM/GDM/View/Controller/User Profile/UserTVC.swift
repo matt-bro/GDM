@@ -11,11 +11,11 @@ import Combine
 class UserTVC: UITableViewController {
 
     var viewModel: UserTVCViewModel!
+    private var cancellables = [AnyCancellable]()
     private let didLoad = PassthroughSubject<Void, Never>()
     private let refresh = PassthroughSubject<Bool, Never>()
-    private var cancellables = [AnyCancellable]()
-    private var dataSource: GenericDataSource<MessageCell, MessageCellViewModel>?
     private let didAppear = PassthroughSubject<Void, Never>()
+    private let done = PassthroughSubject<Void, Never>()
 
     @IBOutlet var switchBtn: UIButton!
     @IBOutlet var userNameTf: UITextField!
@@ -35,7 +35,7 @@ class UserTVC: UITableViewController {
     }
 
     func bindViewModel() {
-        let input = UserTVCViewModel.Input(didLoad: didLoad, refresh: refresh, didAppear: didAppear)
+        let input = UserTVCViewModel.Input(didLoad: didLoad, refresh: refresh, didAppear: didAppear, pressedDone: done)
         let output = viewModel.transform(input: input)
 
         output.profileCardViewModel.sink(receiveValue: { vm in
@@ -45,8 +45,7 @@ class UserTVC: UITableViewController {
             self.followingLabel.text = vm.followingString
 
             if let avatarUrl = vm.avatarUrl {
-                self.avatarImage?.loadImageUsingCacheWithURLString(avatarUrl, placeHolder: #imageLiteral(resourceName: "avatar"), completion: { [unowned self] succes in
-                    //self.avatarImage?.applyCircleShape()
+                self.avatarImage?.loadImageUsingCacheWithURLString(avatarUrl, placeHolder: #imageLiteral(resourceName: "avatar"), completion: { _ in
                 })
             }
         }).store(in: &cancellables)
@@ -56,6 +55,10 @@ class UserTVC: UITableViewController {
             self.refresh.send(true)
         }).store(in: &cancellables)
     }
+}
 
-
+extension UserTVC {
+    @IBAction func pressedDone() {
+        done.send()
+    }
 }

@@ -57,6 +57,11 @@ final class UserListTVCViewModel: ViewModelType {
             input.refresh.send(true)
         }).store(in: &cancellables)
 
+        if self.dependencies.db.me() == nil {
+            dependencies.api.userDetail(for: self.dependencies.session.currentUserLogin, self.dependencies.db)
+                .sink(receiveCompletion: {_ in }, receiveValue: { _ in}).store(in: &cancellables)
+        }
+
         let userChanged = self.dependencies.session.$currentUserLogin.eraseToAnyPublisher()
 
         input.refresh.map({ _ -> AnyPublisher<[UserResponse], Error> in
@@ -69,7 +74,6 @@ final class UserListTVCViewModel: ViewModelType {
                                 case .failure(let error): self.loadingState = .error(error)
                                 case .finished: print("Publisher is finished")
                                 }
-
         }, receiveValue: { [unowned self] value in
             print(value)
             self.followers = dependencies.db.getFollowers(self.dependencies.session.currentUserLogin)

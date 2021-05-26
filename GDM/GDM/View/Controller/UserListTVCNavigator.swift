@@ -24,7 +24,7 @@ final class UserListTVCNavigator: UserListTVCNavigatable {
 
         vc.title = partnerName
 
-        let api = MockAPI()
+        let api = API()
         let db = Database.shared
         let session = AppSession.shared
         session.partnerId = partnerId
@@ -39,10 +39,10 @@ final class UserListTVCNavigator: UserListTVCNavigatable {
     func toUserProfile() {
         let vc = UIStoryboard.main.userTVC
         let nc = UINavigationController(rootViewController: vc)
-        nc.modalPresentationStyle = .automatic
+        nc.modalPresentationStyle = .fullScreen
         let nav = UserTVCNavigator(navigationController: nc)
 
-        let api = MockAPI()
+        let api = API.shared
         let db = Database.shared
         let session = AppSession.shared
 

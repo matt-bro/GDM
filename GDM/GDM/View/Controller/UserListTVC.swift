@@ -67,7 +67,6 @@ class UserListTVC: UIViewController {
         self.tableView.register(UINib(nibName: CompactUserCell.identifier, bundle: nil), forCellReuseIdentifier: CompactUserCell.identifier)
         self.tableView.rowHeight = 70.0
         self.dataSource = GenericDataSource(cellIdentifier: CompactUserCell.identifier, items: [], configureCell: { (cell, vm) in
-            //print(cell)
             cell.viewModel = vm
         })
         self.tableView.dataSource = dataSource
