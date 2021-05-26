@@ -27,7 +27,7 @@ final class ChatVCViewModel: ViewModelType {
     struct Dependencies {
         let api: API
         let db: Database
-        let session: AppSessionProtocol
+        let session: AppSession
     }
 
     private var cancellables = Set<AnyCancellable>()

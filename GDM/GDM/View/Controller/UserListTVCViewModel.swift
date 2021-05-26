@@ -22,18 +22,20 @@ final class UserListTVCViewModel: ViewModelType {
         //Refresh our data
         let refresh: PassthroughSubject<Bool, Never>
         let didAppear: PassthroughSubject<Void, Never>
+        let pressedProfile: PassthroughSubject<Void, Never>
     }
 
     struct Output {
         let finishedLoadingFollowers: AnyPublisher<LoadingState, Never>
         let followers: AnyPublisher<[CompactUserCellViewModel], Never>
+        let userChanged: AnyPublisher<String , Never>
     }
 
     struct Dependencies {
         let api: API
         let db: Database
         let nav: UserListTVCNavigatable
-        let session: AppSessionProtocol
+        let session: AppSession
     }
 
     private var cancellables = Set<AnyCancellable>()
@@ -50,6 +52,13 @@ final class UserListTVCViewModel: ViewModelType {
 
         let loadingState = $loadingState.eraseToAnyPublisher()
 
+        dependencies.session.$currentUserLogin.dropFirst().sink(receiveValue: { _ in
+            self.followers = self.dependencies.db.getFollowers(self.dependencies.session.currentUserLogin)
+            input.refresh.send(true)
+        }).store(in: &cancellables)
+
+        let userChanged = self.dependencies.session.$currentUserLogin.eraseToAnyPublisher()
+
         input.refresh.map({ _ -> AnyPublisher<[UserResponse], Error> in
             self.loadingState = .loading
             return self.dependencies.api.followers(for: self.dependencies.session.currentUserLogin, self.dependencies.db)
@@ -63,11 +72,15 @@ final class UserListTVCViewModel: ViewModelType {
 
         }, receiveValue: { [unowned self] value in
             print(value)
-            self.followers = dependencies.db.getFollowers()
+            self.followers = dependencies.db.getFollowers(self.dependencies.session.currentUserLogin)
             self.loadingState = .finished
         }).store(in: &cancellables)
 
         input.refresh.send(true)
+
+        input.pressedProfile.sink(receiveValue: {
+            self.dependencies.nav.toUserProfile()
+        }).store(in: &cancellables)
 //
 //        dependencies.api.followers(for: dependencies.session.currentUserLogin, self.dependencies.db)
 //            .sink(receiveCompletion: { completion in
@@ -82,7 +95,7 @@ final class UserListTVCViewModel: ViewModelType {
         input.didLoad.combineLatest(input.didAppear).sink(receiveValue: {
             _ in
 
-            self.followers = self.dependencies.db.getFollowers()
+            self.followers = self.dependencies.db.getFollowers(self.dependencies.session.currentUserLogin)
             if self.followers.count == 0 {
                 self.loadingState = .empty
             }
@@ -103,6 +116,6 @@ final class UserListTVCViewModel: ViewModelType {
             }
         }).store(in: &cancellables)
 
-        return Output(finishedLoadingFollowers: loadingState, followers: followers)
+        return Output(finishedLoadingFollowers: loadingState, followers: followers, userChanged: userChanged)
     }
 }

@@ -14,6 +14,7 @@ protocol DatabaseReadable {
 protocol DatabaseSavable {
     func saveUsers(_ userResponses: [UserResponse])
     func saveMessage(message:String, fromId: Int, toId: Int, date: Date)
+    func saveUserDetail(userResponse: UserResponse)
 }
 
 class Database: DatabaseReadable, DatabaseSavable {
@@ -35,6 +36,37 @@ class Database: DatabaseReadable, DatabaseSavable {
             e.avatarUrl = ur.avatar_url
         }
         self.saveContext()
+    }
+
+    
+    func saveUserDetail(userResponse: UserResponse) {
+        self.deleteAllUsers()
+
+        let managedContext = self.persistentContainer.viewContext
+        let e = user(forId: userResponse.id) ?? UserEntity(context: managedContext)
+        e.id = Int64(userResponse.id)
+        e.nodeId = userResponse.node_id
+        e.login = userResponse.login
+        e.avatarUrl = userResponse.avatar_url
+        e.name = userResponse.name
+        e.followers = Int64(userResponse.followers ?? 0)
+        e.following = Int64(userResponse.following ?? 0)
+        e.isMe = true
+        self.saveContext()
+    }
+
+    func me() -> UserEntity? {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "UserEntity")
+        let pred = NSPredicate(format: "isMe == true")
+        request.predicate = pred
+        request.returnsObjectsAsFaults = false
+        do {
+            let result = try self.persistentContainer.viewContext.fetch(request)
+            return result.first as? UserEntity
+        } catch {
+            print("Failed")
+        }
+        return nil
     }
 
     func user(forId id: Int) -> UserEntity? {
@@ -113,8 +145,12 @@ class Database: DatabaseReadable, DatabaseSavable {
     ///Return all followers sorted by id
     func getFollowers(_ userHandle:String? = nil) -> [UserEntity] {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "UserEntity")
-        let sort1 = NSSortDescriptor(key: "id", ascending: true)
+        let sort1 = NSSortDescriptor(key: "login", ascending: true)
         let sort2 = NSSortDescriptor(key: "lastMessageDate", ascending: false)
+        if let userHandle = userHandle {
+            let pred = NSPredicate(format: "login !=[c] %@", userHandle)
+            request.predicate = pred
+        }
         request.sortDescriptors = [sort2, sort1]
         request.returnsObjectsAsFaults = false
         do {

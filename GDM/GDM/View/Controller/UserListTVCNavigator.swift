@@ -9,6 +9,7 @@ import UIKit
 
 protocol UserListTVCNavigatable {
     func toChat(userId: Int, partnerId: Int, partnerName: String?)
+    func toUserProfile()
 }
 
 final class UserListTVCNavigator: UserListTVCNavigatable {
@@ -33,5 +34,22 @@ final class UserListTVCNavigator: UserListTVCNavigatable {
         vc.viewModel = ChatVCViewModel(dependencies: dependencies)
 
         navigationController.pushViewController(vc, animated: true)
+    }
+
+    func toUserProfile() {
+        let vc = UIStoryboard.main.userTVC
+        let nc = UINavigationController(rootViewController: vc)
+        nc.modalPresentationStyle = .automatic
+        let nav = UserTVCNavigator(navigationController: nc)
+
+        let api = MockAPI()
+        let db = Database.shared
+        let session = AppSession.shared
+
+        let dependencies = UserTVCViewModel.Dependencies(api: api, db: db, nav:nav, session: session)
+        vc.viewModel = UserTVCViewModel(dependencies: dependencies)
+
+
+        self.navigationController.present(nc, animated: true, completion: nil)
     }
 }

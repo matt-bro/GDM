@@ -32,6 +32,14 @@ extension UIStoryboard {
         return vc
     }
 
+    var userTVC: UserTVC {
+        let id = "UserTVC"
+        guard let vc = UIStoryboard.main.instantiateViewController(withIdentifier: id) as? UserTVC else {
+            fatalError(couldNotFindSB(id: id, sbName: UIStoryboard.main.description))
+        }
+        return vc
+    }
+
     private func couldNotFindSB(id:String, sbName: String) -> String {
         "Couldn't find \(id) in storyboard named \(sbName)"
     }

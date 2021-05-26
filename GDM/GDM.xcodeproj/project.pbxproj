@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C96BAB9A265EC66600C6C050 /* ProfileCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96BAB99265EC66600C6C050 /* ProfileCardViewModel.swift */; };
+		C9C10E76265EB2FD00CD96FB /* UserTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C10E75265EB2FD00CD96FB /* UserTVC.swift */; };
+		C9C10E7B265EBC2000CD96FB /* UserTVCViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C10E7A265EBC2000CD96FB /* UserTVCViewModel.swift */; };
+		C9C10E80265EBC4400CD96FB /* UserTVCNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C10E7F265EBC4400CD96FB /* UserTVCNavigator.swift */; };
 		C9F98627265AF55E00AF3F43 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F98626265AF55E00AF3F43 /* AppDelegate.swift */; };
 		C9F98629265AF55E00AF3F43 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F98628265AF55E00AF3F43 /* SceneDelegate.swift */; };
 		C9F9862B265AF55E00AF3F43 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F9862A265AF55E00AF3F43 /* ViewController.swift */; };
@@ -71,6 +75,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C96BAB99265EC66600C6C050 /* ProfileCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCardViewModel.swift; sourceTree = "<group>"; };
+		C9C10E75265EB2FD00CD96FB /* UserTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTVC.swift; sourceTree = "<group>"; };
+		C9C10E7A265EBC2000CD96FB /* UserTVCViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTVCViewModel.swift; sourceTree = "<group>"; };
+		C9C10E7F265EBC4400CD96FB /* UserTVCNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTVCNavigator.swift; sourceTree = "<group>"; };
 		C9F98623265AF55E00AF3F43 /* GDM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GDM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9F98626265AF55E00AF3F43 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C9F98628265AF55E00AF3F43 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -150,6 +158,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C9C10E84265EBC5100CD96FB /* User Profile */ = {
+			isa = PBXGroup;
+			children = (
+				C9C10E75265EB2FD00CD96FB /* UserTVC.swift */,
+				C9C10E7A265EBC2000CD96FB /* UserTVCViewModel.swift */,
+				C9C10E7F265EBC4400CD96FB /* UserTVCNavigator.swift */,
+				C96BAB99265EC66600C6C050 /* ProfileCardViewModel.swift */,
+			);
+			path = "User Profile";
+			sourceTree = "<group>";
+		};
 		C9F9861A265AF55E00AF3F43 = {
 			isa = PBXGroup;
 			children = (
@@ -299,6 +318,7 @@
 		C9F9869A265BBAE000AF3F43 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				C9C10E84265EBC5100CD96FB /* User Profile */,
 				C9F9869B265BBB0000AF3F43 /* UserListTVC.swift */,
 				C9F986A3265BBB0F00AF3F43 /* UserListTVCViewModel.swift */,
 				C9F986D5265BFB0700AF3F43 /* UserListTVCNavigator.swift */,
@@ -464,6 +484,7 @@
 				C9F98675265AFAEA00AF3F43 /* URL+Custom.swift in Sources */,
 				C9F98701265D523F00AF3F43 /* MessageCellViewModel.swift in Sources */,
 				C9F986E0265BFBF700AF3F43 /* ChatVCViewModel.swift in Sources */,
+				C9C10E76265EB2FD00CD96FB /* UserTVC.swift in Sources */,
 				C9F986B0265BBD5500AF3F43 /* CompactUserCellViewModel.swift in Sources */,
 				C9F98678265AFAEA00AF3F43 /* Date+Custom.swift in Sources */,
 				C9F9867B265AFAEA00AF3F43 /* UIControl+Publisher.swift in Sources */,
@@ -471,11 +492,14 @@
 				C9F986F8265D433D00AF3F43 /* MessageCell.swift in Sources */,
 				C9F9870F265E8E9F00AF3F43 /* UIViewController+Custom.swift in Sources */,
 				C9F9869C265BBB0000AF3F43 /* UserListTVC.swift in Sources */,
+				C9C10E80265EBC4400CD96FB /* UserTVCNavigator.swift in Sources */,
 				C9F9868C265AFD1D00AF3F43 /* GenericDataSource.swift in Sources */,
+				C9C10E7B265EBC2000CD96FB /* UserTVCViewModel.swift in Sources */,
 				C9F98677265AFAEA00AF3F43 /* String+Custom.swift in Sources */,
 				C9F98662265AFA4600AF3F43 /* MockAPI.swift in Sources */,
 				C9F9867C265AFAEA00AF3F43 /* UI+Localizable.swift in Sources */,
 				C9F986E9265D24C400AF3F43 /* AppSession.swift in Sources */,
+				C96BAB9A265EC66600C6C050 /* ProfileCardViewModel.swift in Sources */,
 				C9F98629265AF55E00AF3F43 /* SceneDelegate.swift in Sources */,
 				C9F98707265D642900AF3F43 /* EmptyView.swift in Sources */,
 				C9F986CC265BDC9900AF3F43 /* UIStoryboard+Custom.swift in Sources */,

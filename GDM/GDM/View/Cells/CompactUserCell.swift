@@ -42,11 +42,11 @@ class CompactUserCell: UITableViewCell {
         self.dateLabel?.text = viewModel?.date
         self.stackView.isHidden = (viewModel?.subtitle?.isEmpty ?? true)
         //self.avatarIV?.applyCircleShape()
-//        if let avatarUrl = viewModel?.avatarUrl {
-//            self.avatarIV?.loadImageUsingCacheWithURLString(avatarUrl.absoluteString, placeHolder: #imageLiteral(resourceName: "avatar"), completion: { [unowned self] succes in
-//                self.avatarIV?.applyCircleShape()
-//            })
-//        }
+        if let avatarUrl = viewModel?.avatarUrl {
+            self.avatarIV?.loadImageUsingCacheWithURLString(avatarUrl.absoluteString, placeHolder: #imageLiteral(resourceName: "avatar"), completion: { [unowned self] succes in
+                self.avatarIV?.applyCircleShape()
+            })
+        }
     }
     
 }

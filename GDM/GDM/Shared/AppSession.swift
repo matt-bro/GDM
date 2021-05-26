@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 protocol AppSessionProtocol {
     var currentUserId: Int { get set }
@@ -13,9 +14,9 @@ protocol AppSessionProtocol {
     var currentUserLogin: String {get set}
 }
 
-class AppSession: AppSessionProtocol {
+class AppSession {
     static let shared = AppSession()
     var currentUserId: Int = 18646247
-    var currentUserLogin = "matt-bro"
+    @Published var currentUserLogin = "matt-bro"
     var partnerId: Int = -1
 }

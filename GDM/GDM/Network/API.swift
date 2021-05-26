@@ -31,13 +31,13 @@ class API: APIProtocol {
         //access key
         private static let accessKey = "6c16635ecdf56ac38045dded167ee369"
 
-        case users
+        case user(login: String)
         case followers(user: String)
 
         var url: URL {
             switch self {
-            case .users:
-                return Endpoint.baseUrl
+            case .user(let login):
+                return Endpoint.baseUrl.appendingPathComponent("users").appendingPathComponent(login)
             case .followers(let user):
                 return Endpoint.baseUrl.appendingPathComponent("users").appendingPathComponent(user).appendingPathComponent("followers")
             }
@@ -98,6 +98,37 @@ class API: APIProtocol {
             .eraseToAnyPublisher()
     }
 
+    func userDetail(for userHandle: String, _ database: DatabaseSavable? = nil, _ defaults: UserDefaults? = nil) -> AnyPublisher<UserResponse, Error> {
+
+        let url = Endpoint.user(login: userHandle).url
+
+        //special encoding for timestamp
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .secondsSince1970
+
+        return URLSession.shared.dataTaskPublisher(for: url)
+
+            //inform about network activity
+            .tryMap { output in
+                guard let response = output.response as? HTTPURLResponse, response.statusCode == 200 else {
+                    throw ServiceError.statusCode
+                }
+                return output.data
+            }
+            .decode(type: UserResponse.self, decoder: decoder)
+            .receive(on: DispatchQueue.main)
+            .handleEvents(receiveOutput: {
+                //print($0)
+                database?.saveUserDetail(userResponse: $0)
+                AppSession.shared.currentUserLogin = $0.login
+                AppSession.shared.currentUserId = $0.id
+                defaults?.lastMetaDataDate = Date()
+            })
+
+            .eraseToAnyPublisher()
+
+    }
+
     func send(message: String, toId: Int, date:Date = Date(), _ database: DatabaseSavable? = nil) -> AnyPublisher<String, Error> {
         //self.receivedMessagePublisher.send(self.randomString(length: 5))
         return Just("")
@@ -114,7 +145,7 @@ class API: APIProtocol {
     func receivedMessage(_ message: String = "",  toId: Int, date:Date = Date(), _ database: DatabaseSavable? = nil) -> AnyPublisher<MessageResponse, Error> {
         return Just(self.dummyReplyJSONString(message: message))
             .compactMap({$0.data(using: .utf8)})
-            .delay(for: 3, scheduler: RunLoop.main)
+            .delay(for: 1, scheduler: RunLoop.main)
             .decode(type: MessageResponse.self, decoder: JSONDecoder())
             .handleEvents(receiveSubscription: {
                 _ in

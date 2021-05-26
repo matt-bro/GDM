@@ -27,13 +27,10 @@ class ChatVC: UIViewController {
 
         self.setupTableView()
         self.bindViewModel()
+        self.didLoad.send()
 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:UIResponder.keyboardWillHideNotification, object: nil)
-
-        didLoad.send()
-
-        showToast(message: "HELLO")
     }
 
     func setupTableView() {

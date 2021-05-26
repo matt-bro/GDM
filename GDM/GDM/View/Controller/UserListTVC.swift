@@ -16,17 +16,11 @@ class UserListTVC: UIViewController {
     private let didLoad = PassthroughSubject<Void, Never>()
     private let didAppear = PassthroughSubject<Void, Never>()
     private let selectRow = PassthroughSubject<Int, Never>()
+    private let pressedProfile = PassthroughSubject<Void, Never>()
     private let refresh = PassthroughSubject<Bool, Never>()
     private var cancellables = [AnyCancellable]()
     private var emptyView: UIView?
     private var dataSource: GenericDataSource<CompactUserCell, CompactUserCellViewModel>?
-
-    var activityBarBtn:UIBarItem {
-        let activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        let barButton = UIBarButtonItem(customView: activityIndicator)
-        activityIndicator.startAnimating()
-        return barButton
-    }
 
     let activityIndicator = UIActivityIndicatorView(style: .medium)
 
@@ -82,7 +76,13 @@ class UserListTVC: UIViewController {
     }
 
     func bindViewModel() {
-        let input = UserListTVCViewModel.Input(didLoad: didLoad, selectRow: selectRow, refresh: refresh, didAppear: didAppear)
+        let input = UserListTVCViewModel.Input(
+            didLoad: didLoad,
+            selectRow: selectRow,
+            refresh: refresh,
+            didAppear: didAppear,
+            pressedProfile: pressedProfile
+        )
         let output = viewModel?.transform(input: input)
 
         output?.finishedLoadingFollowers.sink(receiveValue: {
@@ -108,6 +108,10 @@ class UserListTVC: UIViewController {
             self.tableView.reloadData()
             self.showEmptyView(show: followers.count == 0)
         }).store(in: &cancellables)
+
+        output?.userChanged.sink(receiveValue: {
+            self.title = "@\($0)"
+        }).store(in: &cancellables)
     }
 
     func showEmptyView(show: Bool, error: Error? = nil) {
@@ -121,6 +125,10 @@ class UserListTVC: UIViewController {
             self.tableView.backgroundView = nil
             self.tableView.separatorColor = .lightGray
         }
+    }
+
+    @IBAction func pressedUserProfile() {
+        self.pressedProfile.send()
     }
 }
 
