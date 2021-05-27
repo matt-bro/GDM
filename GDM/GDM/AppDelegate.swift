@@ -12,7 +12,7 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        //initial setup for user session if needed
         if let me = Database.shared.me(), let login = me.login {
             AppSession.shared.currentUserLogin = login
             AppSession.shared.currentUserId = Int(me.id)

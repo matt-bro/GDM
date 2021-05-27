@@ -68,6 +68,8 @@ class API: APIProtocol {
             return Fail(error: ServiceError.tooEarly).eraseToAnyPublisher()
         }
 
+        //Since we have simple requests I can be lazy here and just load as URL
+        //in a more advanced project I would have to set up a full URLRequest
         let url = Endpoint.followers(user: userHandle).url
 
         //special encoding for timestamp
@@ -110,6 +112,8 @@ class API: APIProtocol {
     ///     - Decoded user or an error
     func userDetail(for userHandle: String, _ database: DatabaseSavable? = nil, _ defaults: UserDefaults? = nil, _ session: AppSession? = nil) -> AnyPublisher<UserResponse, Error> {
 
+        //Since we have simple requests I can be lazy here and just load as URL
+        //in a more advanced project I would have to set up a full URLRequest
         let url = Endpoint.user(login: userHandle).url
 
         //special encoding for timestamp
@@ -126,9 +130,7 @@ class API: APIProtocol {
                 return output.data
             }
             .decode(type: UserResponse.self, decoder: decoder)
-
             .handleEvents(receiveOutput: {
-                //print($0)
                 database?.saveUserDetail(userResponse: $0)
                 session?.currentUserLogin = $0.login
                 session?.currentUserId = $0.id
@@ -180,11 +182,6 @@ class API: APIProtocol {
                 return $0
             })
             .eraseToAnyPublisher()
-    }
-
-    func randomString(length: Int) -> String {
-      let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-      return String((0..<length).map { _ in letters.randomElement()! })
     }
 
     func dummyReplyJSONString(message: String = "") -> String {
