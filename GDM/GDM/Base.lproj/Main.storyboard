@@ -12,7 +12,7 @@
         <!--ChatVC-->
         <scene sceneID="OqG-IZ-WvR">
             <objects>
-                <viewController id="fX3-bL-xxu" customClass="ChatVC" customModule="GDM" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="delete1" useStoryboardIdentifierAsRestorationIdentifier="YES" id="fX3-bL-xxu" customClass="ChatVC" customModule="GDM" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OTJ-dj-QPd">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -114,7 +114,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="skE-EK-bn5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1940.5797101449277" y="-544.41964285714278"/>
+            <point key="canvasLocation" x="7380" y="-530"/>
         </scene>
         <!--ChatVC-->
         <scene sceneID="iyN-ol-7iv">
@@ -212,53 +212,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ApP-3l-MjR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2724.6376811594205" y="-565.17857142857144"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="RB5-l8-usR">
-            <objects>
-                <viewController id="yGS-lZ-pg4" customClass="ViewController" customModule="GDM" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="cgy-vX-kQy">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wyc-70-mmr">
-                                <rect key="frame" x="0.0" y="5" width="414" height="896"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </tableView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="8eL-Dk-RVl"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="wyc-70-mmr" firstAttribute="height" secondItem="cgy-vX-kQy" secondAttribute="height" id="9HE-Qc-via"/>
-                            <constraint firstItem="wyc-70-mmr" firstAttribute="centerX" secondItem="8eL-Dk-RVl" secondAttribute="centerX" id="Hf0-e1-6vE"/>
-                            <constraint firstItem="wyc-70-mmr" firstAttribute="centerY" secondItem="8eL-Dk-RVl" secondAttribute="centerY" id="OZB-He-1B2"/>
-                            <constraint firstItem="wyc-70-mmr" firstAttribute="width" secondItem="cgy-vX-kQy" secondAttribute="width" id="f3o-Bb-eCQ"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="tableView" destination="wyc-70-mmr" id="ghh-h1-51d"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Iyz-Et-sn2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3528" y="-565"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="lpt-bC-rv1">
-            <objects>
-                <viewController storyboardIdentifier="UserVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="siW-4p-qNp" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="qfQ-At-ucw">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="JDj-I4-jmh"/>
-                        <color key="backgroundColor" systemColor="systemGray5Color"/>
-                    </view>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8dq-hD-tPV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4318.840579710145" y="-568.52678571428567"/>
+            <point key="canvasLocation" x="1762" y="-544"/>
         </scene>
         <!--UserTVC-->
         <scene sceneID="VwN-4C-mnR">
@@ -335,6 +289,12 @@
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                             <real key="value" value="10"/>
                                                         </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                            <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                            <real key="value" value="1"/>
+                                                        </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KlY-ua-fYA" userLabel="Switch View" customClass="CardView" customModule="GDM" customModuleProvider="target">
@@ -397,6 +357,12 @@
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                             <real key="value" value="10"/>
                                                         </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                            <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                            <real key="value" value="1"/>
+                                                        </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                             </subviews>
@@ -439,7 +405,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fA9-hN-S8l" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6200.0000000000009" y="-569.19642857142856"/>
+            <point key="canvasLocation" x="2855" y="-544"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hSh-yr-iI1">
@@ -457,7 +423,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YKn-WM-8lG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="140.57971014492756" y="-544.41964285714278"/>
+            <point key="canvasLocation" x="938" y="-1352"/>
         </scene>
         <!--Github DM-->
         <scene sceneID="ypk-4W-zDh">
@@ -499,12 +465,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Eog-WU-MLy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="977" y="-535"/>
+            <point key="canvasLocation" x="939" y="-544"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="p1j-go-8LD">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="shE-UJ-XgG" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="delete2" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="shE-UJ-XgG" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="M5w-Td-ACL">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -517,7 +483,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JBf-g6-P42" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5289.8550724637689" y="-569.19642857142856"/>
+            <point key="canvasLocation" x="2854" y="-1352"/>
         </scene>
     </scenes>
     <resources>
@@ -532,9 +498,6 @@
         </systemColor>
         <systemColor name="systemGray3Color">
             <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemGray5Color">
-            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
