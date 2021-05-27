@@ -40,7 +40,8 @@ class CompactUserCell: UITableViewCell {
         self.subtitleLabel?.text = viewModel?.subtitle
         self.dateLabel?.text = viewModel?.date
         self.stackView.isHidden = (viewModel?.subtitle?.isEmpty ?? true)
-        //self.avatarIV?.applyCircleShape()
+
+        //load profile image
         if let avatarUrl = viewModel?.avatarUrl {
             self.avatarIV?.loadImageUsingCacheWithURLString(avatarUrl.absoluteString, placeHolder: #imageLiteral(resourceName: "avatar"), completion: { [unowned self] _ in
                 self.avatarIV?.applyCircleShape()

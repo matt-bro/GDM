@@ -43,6 +43,7 @@ class UserTVC: UITableViewController {
         let input = UserTVCViewModel.Input(didLoad: didLoad, refresh: refresh, didAppear: didAppear, pressedDone: done, userNameTextChanged: userNameText)
         let output = viewModel.transform(input: input)
 
+        //fill our user card with profile info
         output.profileCardViewModel.sink(receiveValue: { [unowned self] vm in
             self.userNameLabel.text = vm.userHandle
             self.nameLabel.text = vm.name
@@ -55,6 +56,7 @@ class UserTVC: UITableViewController {
             }
         }).store(in: &cancellables)
 
+        //tapping switch btn with valid text will lead to switching the user
         switchBtn.tapPublisher.sink(receiveValue: { [unowned self] _ in
             if let userName = self.userNameTf.text, userName.isEmpty == false {
                 AppSession.shared.currentUserLogin = userName
@@ -62,15 +64,18 @@ class UserTVC: UITableViewController {
             }
         }).store(in: &cancellables)
 
+        //pass our username textfield text to vm
         self.userNameTf.textPublisher()
             .sink(receiveValue: { [unowned self] text in
                     self.userNameText.send(text)})
             .store(in: &cancellables)
 
+        //if there is an error with loading user we just show a general error
         output.loadingState.sink(receiveValue: { [unowned self] hasError in
             self.showError(hasError)
         }).store(in: &cancellables)
 
+        //enable switch button if textfield has text
         output.canSwitch.sink(receiveValue: { [unowned self] canSwitch in
             self.switchBtn.isEnabled = canSwitch
         }).store(in: &cancellables)
@@ -82,6 +87,7 @@ extension UserTVC {
         done.send()
     }
 
+    //showing error label under switch user textfield
     func showError(_ show: Bool) {
         if show {
             self.errorLabel.isHidden = true

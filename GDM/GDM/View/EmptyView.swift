@@ -81,12 +81,4 @@ extension EmptyView {
         emptyView.logo?.image = #imageLiteral(resourceName: "no-wifi")
         return emptyView
     }
-
-    static func empty() -> UIView {
-        let emptyView = EmptyView(frame: .zero)
-        emptyView.titleLabel?.text = "There are no files here yet".ll
-        emptyView.subTitleLabel?.text = "You might not have sufficent permissions. Please contact oneapp@fmc-ag.com.".ll
-        emptyView.logo?.image = #imageLiteral(resourceName: "empty 2-fmc")
-        return emptyView
-    }
 }

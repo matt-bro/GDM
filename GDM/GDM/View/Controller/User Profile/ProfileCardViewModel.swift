@@ -8,9 +8,12 @@
 import Foundation
 
 struct ProfileCardViewModel {
+    //user login name
     let userHandle: String?
+    //user real name
     let name: String?
     let followers: Int
+    //followers formated with locale
     var followersString: String {
         return "\("Followers".ll) \(followers)"
     }
@@ -18,7 +21,7 @@ struct ProfileCardViewModel {
     var followingString: String {
         return "\("Following".ll) \(following)"
     }
-
+    //image url
     let avatarUrl: String?
 
 }

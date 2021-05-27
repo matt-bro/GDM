@@ -19,6 +19,7 @@ final class UserListTVCNavigator: UserListTVCNavigatable {
         self.navigationController = navigationController
     }
 
+    ///go to chat for partner id
     func toChat(userId: Int, partnerId: Int, partnerName: String?) {
         let vc = UIStoryboard.main.chatVC
 
@@ -35,6 +36,7 @@ final class UserListTVCNavigator: UserListTVCNavigatable {
         navigationController.pushViewController(vc, animated: true)
     }
 
+    ///Go to our profile and user switch screen
     func toUserProfile() {
         let vc = UIStoryboard.main.userTVC
         let nc = UINavigationController(rootViewController: vc)

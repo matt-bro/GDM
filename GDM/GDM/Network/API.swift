@@ -29,7 +29,7 @@ class API: APIProtocol {
     enum Endpoint {
         private static let baseUrl = URL(string: "https://api.github.com")!
         //access key
-        private static let accessKey = "6c16635ecdf56ac38045dded167ee369"
+        private static let accessKey = ""
 
         //get our user detail
         case user(login: String)

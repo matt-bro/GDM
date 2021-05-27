@@ -14,6 +14,7 @@ final class UserTVCNavigator {
         self.navigationController = navigationController
     }
 
+    ///dismiss and go back to follower list
     func done() {
         self.navigationController.dismiss(animated: true)
     }

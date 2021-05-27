@@ -55,11 +55,14 @@ final class UserListTVCViewModel: ViewModelType {
 
         let loadingState = $loadingState.eraseToAnyPublisher()
 
+        //if our user changes we need to reload all followers
         dependencies.session.$currentUserLogin.dropFirst().sink(receiveValue: { _ in
             self.followers = self.dependencies.db.getFollowers(self.dependencies.session.currentUserLogin)
             input.refresh.send(true)
         }).store(in: &cancellables)
 
+        //the first time we start the app we don't have a user so we load it here
+        //afterwards we always get a user because it will haben from profile switch
         if self.dependencies.db.me() == nil {
             dependencies.api.userDetail(for: self.dependencies.session.currentUserLogin, self.dependencies.db, nil, self.dependencies.session)
                 .sink(receiveCompletion: {_ in }, receiveValue: { _ in}).store(in: &cancellables)
@@ -69,6 +72,7 @@ final class UserListTVCViewModel: ViewModelType {
         let userChanged = self.dependencies.session.$currentUserLogin.eraseToAnyPublisher()
 
         //load our followers
+        //and inform ui to reload
         input.refresh.map({ _ -> AnyPublisher<[UserResponse], Error> in
             self.loadingState = .loading
             return self.dependencies.api.followers(for: self.dependencies.session.currentUserLogin, self.dependencies.db)
@@ -84,6 +88,7 @@ final class UserListTVCViewModel: ViewModelType {
             self.loadingState = .finished
         }).store(in: &cancellables)
 
+        //on start we rerfesh our data
         input.refresh.send(true)
 
         //go to user profile screen
@@ -109,6 +114,8 @@ final class UserListTVCViewModel: ViewModelType {
             })
         }).eraseToAnyPublisher()
 
+        //after we selected a user we go to the chat
+        //inform our navigator to switch
         input.selectRow.sink(receiveValue: { userId in
             if userId != -1 {
                 let partnerUser = self.dependencies.db.user(forId: userId)
