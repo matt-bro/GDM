@@ -10,6 +10,7 @@
 		C96BAB9A265EC66600C6C050 /* ProfileCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96BAB99265EC66600C6C050 /* ProfileCardViewModel.swift */; };
 		C96BABAF265FE21700C6C050 /* UserListTVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96BABA7265FE20800C6C050 /* UserListTVCTests.swift */; };
 		C96BABBB265FE4C700C6C050 /* ProfileCardViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96BABB3265FE49E00C6C050 /* ProfileCardViewModelTests.swift */; };
+		C96BABC3265FE7E400C6C050 /* ChatVCViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96BABC2265FE7E400C6C050 /* ChatVCViewModelTests.swift */; };
 		C9C10E76265EB2FD00CD96FB /* UserTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C10E75265EB2FD00CD96FB /* UserTVC.swift */; };
 		C9C10E7B265EBC2000CD96FB /* UserTVCViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C10E7A265EBC2000CD96FB /* UserTVCViewModel.swift */; };
 		C9C10E80265EBC4400CD96FB /* UserTVCNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C10E7F265EBC4400CD96FB /* UserTVCNavigator.swift */; };
@@ -80,6 +81,7 @@
 		C96BAB99265EC66600C6C050 /* ProfileCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCardViewModel.swift; sourceTree = "<group>"; };
 		C96BABA7265FE20800C6C050 /* UserListTVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListTVCTests.swift; sourceTree = "<group>"; };
 		C96BABB3265FE49E00C6C050 /* ProfileCardViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCardViewModelTests.swift; sourceTree = "<group>"; };
+		C96BABC2265FE7E400C6C050 /* ChatVCViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVCViewModelTests.swift; sourceTree = "<group>"; };
 		C9C10E75265EB2FD00CD96FB /* UserTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTVC.swift; sourceTree = "<group>"; };
 		C9C10E7A265EBC2000CD96FB /* UserTVCViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTVCViewModel.swift; sourceTree = "<group>"; };
 		C9C10E7F265EBC4400CD96FB /* UserTVCNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTVCNavigator.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 			children = (
 				C9F986DA265BFBE900AF3F43 /* ChatVC.swift */,
 				C9F986DF265BFBF700AF3F43 /* ChatVCViewModel.swift */,
+				C96BABC2265FE7E400C6C050 /* ChatVCViewModelTests.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -551,6 +554,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C96BABAF265FE21700C6C050 /* UserListTVCTests.swift in Sources */,
+				C96BABC3265FE7E400C6C050 /* ChatVCViewModelTests.swift in Sources */,
 				C9F98641265AF55F00AF3F43 /* GDMTests.swift in Sources */,
 				C96BABBB265FE4C700C6C050 /* ProfileCardViewModelTests.swift in Sources */,
 			);
@@ -730,6 +734,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 73C2KZC994;
 				INFOPLIST_FILE = GDM/Info.plist;
@@ -749,6 +754,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 73C2KZC994;
 				INFOPLIST_FILE = GDM/Info.plist;

@@ -38,6 +38,7 @@ class Database: DatabaseReadable, DatabaseSavable {
     }
 
     func saveUserDetail(userResponse: UserResponse) {
+        self.deleteAllMessages()
         self.deleteAllUsers()
 
         let managedContext = self.persistentContainer.viewContext
