@@ -23,14 +23,17 @@ class ChatVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-
         self.setupTableView()
         self.bindViewModel()
         self.didLoad.send()
 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.scrollToBottom()
     }
 
     func setupTableView() {
@@ -88,7 +91,7 @@ class ChatVC: UIViewController {
 
     @objc func keyboardWillHide(notification:NSNotification) {
         UIView.animate(withDuration: 0.2, animations: { () -> Void in
-                self.inputContainerBottomSpace.constant = 0
+                self.inputContainerBottomSpace.constant = 5
             })
     }
 
@@ -102,6 +105,10 @@ class ChatVC: UIViewController {
             self.tableView.scrollToRow(at: indexPath, at: UITableView.ScrollPosition.top, animated: true)
         }
     }
+
+    func scrollToBottom(animated: Bool) {
+
+   }
 }
 
 
