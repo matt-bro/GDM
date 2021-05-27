@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		C96BAB9A265EC66600C6C050 /* ProfileCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96BAB99265EC66600C6C050 /* ProfileCardViewModel.swift */; };
+		C96BABAF265FE21700C6C050 /* UserListTVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96BABA7265FE20800C6C050 /* UserListTVCTests.swift */; };
+		C96BABBB265FE4C700C6C050 /* ProfileCardViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96BABB3265FE49E00C6C050 /* ProfileCardViewModelTests.swift */; };
 		C9C10E76265EB2FD00CD96FB /* UserTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C10E75265EB2FD00CD96FB /* UserTVC.swift */; };
 		C9C10E7B265EBC2000CD96FB /* UserTVCViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C10E7A265EBC2000CD96FB /* UserTVCViewModel.swift */; };
 		C9C10E80265EBC4400CD96FB /* UserTVCNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C10E7F265EBC4400CD96FB /* UserTVCNavigator.swift */; };
@@ -76,6 +78,8 @@
 
 /* Begin PBXFileReference section */
 		C96BAB99265EC66600C6C050 /* ProfileCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCardViewModel.swift; sourceTree = "<group>"; };
+		C96BABA7265FE20800C6C050 /* UserListTVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListTVCTests.swift; sourceTree = "<group>"; };
+		C96BABB3265FE49E00C6C050 /* ProfileCardViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCardViewModelTests.swift; sourceTree = "<group>"; };
 		C9C10E75265EB2FD00CD96FB /* UserTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTVC.swift; sourceTree = "<group>"; };
 		C9C10E7A265EBC2000CD96FB /* UserTVCViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTVCViewModel.swift; sourceTree = "<group>"; };
 		C9C10E7F265EBC4400CD96FB /* UserTVCNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTVCNavigator.swift; sourceTree = "<group>"; };
@@ -158,6 +162,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C96BABA1265FE0D300C6C050 /* Follower List */ = {
+			isa = PBXGroup;
+			children = (
+				C9F9869B265BBB0000AF3F43 /* UserListTVC.swift */,
+				C9F986A3265BBB0F00AF3F43 /* UserListTVCViewModel.swift */,
+				C9F986D5265BFB0700AF3F43 /* UserListTVCNavigator.swift */,
+				C96BABA7265FE20800C6C050 /* UserListTVCTests.swift */,
+			);
+			path = "Follower List";
+			sourceTree = "<group>";
+		};
+		C96BABA2265FE0E100C6C050 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				C9F986DA265BFBE900AF3F43 /* ChatVC.swift */,
+				C9F986DF265BFBF700AF3F43 /* ChatVCViewModel.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		C96BABA3265FE10200C6C050 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				C9F9862C265AF55E00AF3F43 /* Main.storyboard */,
+				C9F98634265AF55F00AF3F43 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
 		C9C10E84265EBC5100CD96FB /* User Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -165,6 +198,7 @@
 				C9C10E7A265EBC2000CD96FB /* UserTVCViewModel.swift */,
 				C9C10E7F265EBC4400CD96FB /* UserTVCNavigator.swift */,
 				C96BAB99265EC66600C6C050 /* ProfileCardViewModel.swift */,
+				C96BABB3265FE49E00C6C050 /* ProfileCardViewModelTests.swift */,
 			);
 			path = "User Profile";
 			sourceTree = "<group>";
@@ -192,6 +226,9 @@
 		C9F98625265AF55E00AF3F43 /* GDM */ = {
 			isa = PBXGroup;
 			children = (
+				C9F98626265AF55E00AF3F43 /* AppDelegate.swift */,
+				C9F98628265AF55E00AF3F43 /* SceneDelegate.swift */,
+				C96BABA3265FE10200C6C050 /* Storyboards */,
 				C9F98666265AFA5C00AF3F43 /* Database */,
 				C9F9865C265AF76500AF3F43 /* Network */,
 				C9F98698265BBACF00AF3F43 /* View */,
@@ -199,12 +236,8 @@
 				C9F98689265AFD1D00AF3F43 /* Shared */,
 				C9F98680265AFB7A00AF3F43 /* Localization */,
 				C9F9866C265AFAEA00AF3F43 /* Extensions */,
-				C9F98626265AF55E00AF3F43 /* AppDelegate.swift */,
-				C9F98628265AF55E00AF3F43 /* SceneDelegate.swift */,
 				C9F9862A265AF55E00AF3F43 /* ViewController.swift */,
-				C9F9862C265AF55E00AF3F43 /* Main.storyboard */,
 				C9F98632265AF55F00AF3F43 /* Assets.xcassets */,
-				C9F98634265AF55F00AF3F43 /* LaunchScreen.storyboard */,
 				C9F98637265AF55F00AF3F43 /* Info.plist */,
 				C9F9862F265AF55E00AF3F43 /* GDM.xcdatamodeld */,
 			);
@@ -318,12 +351,9 @@
 		C9F9869A265BBAE000AF3F43 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				C96BABA2265FE0E100C6C050 /* Chat */,
+				C96BABA1265FE0D300C6C050 /* Follower List */,
 				C9C10E84265EBC5100CD96FB /* User Profile */,
-				C9F9869B265BBB0000AF3F43 /* UserListTVC.swift */,
-				C9F986A3265BBB0F00AF3F43 /* UserListTVCViewModel.swift */,
-				C9F986D5265BFB0700AF3F43 /* UserListTVCNavigator.swift */,
-				C9F986DA265BFBE900AF3F43 /* ChatVC.swift */,
-				C9F986DF265BFBF700AF3F43 /* ChatVCViewModel.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -520,7 +550,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C96BABAF265FE21700C6C050 /* UserListTVCTests.swift in Sources */,
 				C9F98641265AF55F00AF3F43 /* GDMTests.swift in Sources */,
+				C96BABBB265FE4C700C6C050 /* ProfileCardViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

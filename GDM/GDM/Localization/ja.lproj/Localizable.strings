@@ -5,3 +5,8 @@
 "loading" = "データの読み込み";
 "tryagain" = "再試行";
 "loading.error" = "エラー";
+"switch.description" = "ユーザーを切り替えると、現在のデータが削除されます";
+"done" = "完了";
+"Followers" = "フォロワー";
+"Following" = "フォローする";
+"switch.btn" = "変更する";

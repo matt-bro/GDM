@@ -225,15 +225,15 @@
                         <sections>
                             <tableViewSection id="DkP-Uz-Dvh">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="764" id="Ohk-JI-lKk">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="764"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="495" id="Ohk-JI-lKk">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="495"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ohk-JI-lKk" id="TPs-Ih-HqJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="764"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="495"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6gJ-iv-oWn" userLabel="Profile View" customClass="CardView" customModule="GDM" customModuleProvider="target">
-                                                    <rect key="frame" x="20" y="140" width="374" height="226.5"/>
+                                                    <rect key="frame" x="20" y="150" width="374" height="226.5"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="WRd-fZ-GqQ">
                                                             <rect key="frame" x="0.0" y="0.0" width="374" height="226.5"/>
@@ -298,7 +298,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KlY-ua-fYA" userLabel="Switch View" customClass="CardView" customModule="GDM" customModuleProvider="target">
-                                                    <rect key="frame" x="20" y="20" width="374" height="100"/>
+                                                    <rect key="frame" x="20" y="30" width="374" height="100"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8Dn-OB-TP4">
                                                             <rect key="frame" x="0.0" y="0.0" width="374" height="100"/>
@@ -321,7 +321,7 @@
                                                                             <rect key="frame" x="303" y="8" width="47" height="34"/>
                                                                             <state key="normal" title="Switch"/>
                                                                             <userDefinedRuntimeAttributes>
-                                                                                <userDefinedRuntimeAttribute type="string" keyPath="localizableText" value="Switch"/>
+                                                                                <userDefinedRuntimeAttribute type="string" keyPath="localizableText" value="switch.btn"/>
                                                                             </userDefinedRuntimeAttributes>
                                                                         </button>
                                                                     </subviews>
@@ -332,12 +332,18 @@
                                                                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                     <color key="textColor" systemColor="systemGrayColor"/>
                                                                     <nil key="highlightedColor"/>
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizableText" value="switch.description"/>
+                                                                    </userDefinedRuntimeAttributes>
                                                                 </label>
                                                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Error switching to user" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bS5-jd-cFo">
                                                                     <rect key="frame" x="8" y="92" width="358" height="0.0"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                     <color key="textColor" systemColor="systemPinkColor"/>
                                                                     <nil key="highlightedColor"/>
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizableText" value="loading.error"/>
+                                                                    </userDefinedRuntimeAttributes>
                                                                 </label>
                                                             </subviews>
                                                             <constraints>
@@ -372,7 +378,7 @@
                                                 <constraint firstItem="KlY-ua-fYA" firstAttribute="centerX" secondItem="6gJ-iv-oWn" secondAttribute="centerX" id="Ox4-Qm-0sy"/>
                                                 <constraint firstAttribute="trailing" secondItem="6gJ-iv-oWn" secondAttribute="trailing" constant="20" id="eMd-IU-rHO"/>
                                                 <constraint firstItem="KlY-ua-fYA" firstAttribute="width" secondItem="WRd-fZ-GqQ" secondAttribute="width" id="fBe-MP-VzD"/>
-                                                <constraint firstItem="KlY-ua-fYA" firstAttribute="top" secondItem="TPs-Ih-HqJ" secondAttribute="top" constant="20" id="w2t-nU-6ck"/>
+                                                <constraint firstItem="KlY-ua-fYA" firstAttribute="top" secondItem="TPs-Ih-HqJ" secondAttribute="top" constant="30" id="w2t-nU-6ck"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -394,6 +400,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="avatarImage" destination="u2l-fU-KP4" id="jr6-Qp-s1i"/>
+                        <outlet property="doneBtn" destination="NoN-X5-fMX" id="BGv-EZ-jzs"/>
                         <outlet property="errorLabel" destination="bS5-jd-cFo" id="RPT-KA-ySy"/>
                         <outlet property="followersLabel" destination="bVB-1s-K5d" id="ILZ-xI-oss"/>
                         <outlet property="followingLabel" destination="kGR-6M-KHC" id="irC-kY-6Kf"/>
@@ -405,7 +412,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fA9-hN-S8l" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2855" y="-544"/>
+            <point key="canvasLocation" x="2853.6231884057975" y="-544.41964285714278"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hSh-yr-iI1">

@@ -22,6 +22,7 @@ class UserTVC: UITableViewController {
     @IBOutlet var switchBtn: UIButton!
     @IBOutlet var userNameTf: UITextField!
     @IBOutlet var errorLabel: UILabel!
+    @IBOutlet var doneBtn: UIBarButtonItem!
 
     @IBOutlet var userNameLabel: UILabel!
     @IBOutlet var nameLabel: UILabel!
@@ -31,6 +32,8 @@ class UserTVC: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        self.doneBtn.title = "done".ll
 
         self.bindViewModel()
         self.didLoad.send()

@@ -4,3 +4,8 @@
 "loading" = "Lade Daten...";
 "tryagain" = "Erneut laden";
 "loading.error" = "Fehler";
+"switch.description" = "Bentzer wechsel führt zu Verlust der aktuellen Daten"; 
+"done" = "Fertig";
+"Followers" = "Follower";
+"Following" = "Following";
+"switch.btn" = "Wechseln";

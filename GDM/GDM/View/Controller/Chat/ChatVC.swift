@@ -56,6 +56,7 @@ class ChatVC: UIViewController {
             print("sending: \($0)")
             self.messageTV.resignFirstResponder()
             self.messageTV.text = ""
+            self.sendBtn.isEnabled = false
             self.scrollToBottom()
         }).store(in: &cancellables)
 
@@ -78,14 +79,15 @@ class ChatVC: UIViewController {
         self.tableView.reloadData()
         self.scrollToBottom()
     }
+}
 
+extension ChatVC {
     @objc func keyboardWillShow(notification: NSNotification) {
         let info = notification.userInfo!
         let keyboardFrame: CGRect = (info[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
 
         UIView.animate(withDuration: 0.2, animations: { () -> Void in
                 self.inputContainerBottomSpace.constant = keyboardFrame.size.height + 10
-
             })
     }
 
@@ -94,19 +96,10 @@ class ChatVC: UIViewController {
                 self.inputContainerBottomSpace.constant = 5
             })
     }
-
-    override func updateViewConstraints() {
-        super.updateViewConstraints()
-    }
-
     func scrollToBottom() {
         if let dataSourceItems = self.dataSource?.items, dataSourceItems.count > 0 {
             let indexPath = IndexPath(item: dataSourceItems.count-1, section: 0)
             self.tableView.scrollToRow(at: indexPath, at: UITableView.ScrollPosition.top, animated: true)
         }
     }
-
-    func scrollToBottom(animated: Bool) {
-
-   }
 }

@@ -4,3 +4,8 @@
 "loading" = "Loading data";
 "tryagain" = "Try again";
 "loading.error" = "Loading error";
+"switch.description" = "Switching user will delete your current data"; 
+"done" = "done";
+"Followers" = "Followers";
+"Following" = "Following";
+"switch.btn" = "Switch";
