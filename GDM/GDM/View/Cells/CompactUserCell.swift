@@ -16,7 +16,6 @@ class CompactUserCell: UITableViewCell {
     @IBOutlet var subtitleLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var stackView: UIStackView!
-    
 
     var viewModel: CompactUserCellViewModel? {
         didSet {
@@ -43,10 +42,10 @@ class CompactUserCell: UITableViewCell {
         self.stackView.isHidden = (viewModel?.subtitle?.isEmpty ?? true)
         //self.avatarIV?.applyCircleShape()
         if let avatarUrl = viewModel?.avatarUrl {
-            self.avatarIV?.loadImageUsingCacheWithURLString(avatarUrl.absoluteString, placeHolder: #imageLiteral(resourceName: "avatar"), completion: { [unowned self] succes in
+            self.avatarIV?.loadImageUsingCacheWithURLString(avatarUrl.absoluteString, placeHolder: #imageLiteral(resourceName: "avatar"), completion: { [unowned self] _ in
                 self.avatarIV?.applyCircleShape()
             })
         }
     }
-    
+
 }

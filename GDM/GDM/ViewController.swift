@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     var messages = [
         "This is a normal message",
         "This is a normal message\n2 Lines",
-        "This is a normal message\n2 Lines\n3 lines",
+        "This is a normal message\n2 Lines\n3 lines"
     ]
 
     override func viewDidLoad() {
@@ -35,6 +35,4 @@ class ViewController: UIViewController {
         self.tableView.estimatedRowHeight = 50
     }
 
-
 }
-

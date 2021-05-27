@@ -55,5 +55,5 @@ class MessageCell: UITableViewCell {
         self.messageLabel.text = viewModel?.message
         self.messageType(isSentMessage: viewModel?.isMe ?? false)
     }
-    
+
 }

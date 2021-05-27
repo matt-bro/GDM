@@ -13,7 +13,7 @@ protocol DatabaseReadable {
 
 protocol DatabaseSavable {
     func saveUsers(_ userResponses: [UserResponse])
-    func saveMessage(message:String, fromId: Int, toId: Int, date: Date)
+    func saveMessage(message: String, fromId: Int, toId: Int, date: Date)
     func saveUserDetail(userResponse: UserResponse)
 }
 
@@ -23,7 +23,6 @@ class Database: DatabaseReadable, DatabaseSavable {
 
     ///Initially fills our database with a local json if needed
     func inititalSetup() {}
-
 
     func saveUsers(_ userResponses: [UserResponse]) {
         //I don't want to check for update/insert so I delete all entries before
@@ -38,7 +37,6 @@ class Database: DatabaseReadable, DatabaseSavable {
         self.saveContext()
     }
 
-    
     func saveUserDetail(userResponse: UserResponse) {
         self.deleteAllUsers()
 
@@ -83,7 +81,7 @@ class Database: DatabaseReadable, DatabaseSavable {
         return nil
     }
 
-    func saveMessage(message:String, fromId: Int, toId: Int, date: Date = Date()) {
+    func saveMessage(message: String, fromId: Int, toId: Int, date: Date = Date()) {
         let managedContext = self.persistentContainer.viewContext
         let e = MessageEntity(context: managedContext)
         e.sendDate = date
@@ -143,7 +141,7 @@ class Database: DatabaseReadable, DatabaseSavable {
     }
 
     ///Return all followers sorted by id
-    func getFollowers(_ userHandle:String? = nil) -> [UserEntity] {
+    func getFollowers(_ userHandle: String? = nil) -> [UserEntity] {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "UserEntity")
         let sort1 = NSSortDescriptor(key: "login", ascending: true)
         let sort2 = NSSortDescriptor(key: "lastMessageDate", ascending: false)

@@ -57,7 +57,6 @@ struct UserResponse: Decodable {
   }
 */
 
-
 struct SingleUserResponse {
     var login: String
 }
@@ -97,4 +96,3 @@ struct SingleUserResponse {
    "updated_at": "2021-05-26T09:49:41Z"
  }
  */
-

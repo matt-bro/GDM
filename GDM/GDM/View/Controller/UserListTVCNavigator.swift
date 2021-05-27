@@ -29,7 +29,6 @@ final class UserListTVCNavigator: UserListTVCNavigatable {
         let session = AppSession.shared
         session.partnerId = partnerId
 
-
         let dependencies = ChatVCViewModel.Dependencies(api: api, db: db, session: session)
         vc.viewModel = ChatVCViewModel(dependencies: dependencies)
 
@@ -46,9 +45,8 @@ final class UserListTVCNavigator: UserListTVCNavigatable {
         let db = Database.shared
         let session = AppSession.shared
 
-        let dependencies = UserTVCViewModel.Dependencies(api: api, db: db, nav:nav, session: session)
+        let dependencies = UserTVCViewModel.Dependencies(api: api, db: db, nav: nav, session: session)
         vc.viewModel = UserTVCViewModel(dependencies: dependencies)
-
 
         self.navigationController.present(nc, animated: true, completion: nil)
     }

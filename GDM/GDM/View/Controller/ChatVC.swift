@@ -27,8 +27,8 @@ class ChatVC: UIViewController {
         self.bindViewModel()
         self.didLoad.send()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -70,16 +70,16 @@ class ChatVC: UIViewController {
         output.updateMessages.sink(receiveValue: {
             _ in
         }).store(in: &cancellables)
-        
+
     }
 
-    func updateDataSource(items:[MessageCellViewModel]) {
+    func updateDataSource(items: [MessageCellViewModel]) {
         self.dataSource?.items = items
         self.tableView.reloadData()
         self.scrollToBottom()
     }
 
-    @objc func keyboardWillShow(notification:NSNotification) {
+    @objc func keyboardWillShow(notification: NSNotification) {
         let info = notification.userInfo!
         let keyboardFrame: CGRect = (info[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
 
@@ -89,7 +89,7 @@ class ChatVC: UIViewController {
             })
     }
 
-    @objc func keyboardWillHide(notification:NSNotification) {
+    @objc func keyboardWillHide(notification: NSNotification) {
         UIView.animate(withDuration: 0.2, animations: { () -> Void in
                 self.inputContainerBottomSpace.constant = 5
             })
@@ -110,5 +110,3 @@ class ChatVC: UIViewController {
 
    }
 }
-
-

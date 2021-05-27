@@ -29,7 +29,6 @@ class UserTVC: UITableViewController {
     @IBOutlet var followingLabel: UILabel!
     @IBOutlet var avatarImage: UIImageView!
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -62,7 +61,7 @@ class UserTVC: UITableViewController {
 
         self.userNameTf.textPublisher()
             .sink(receiveValue: { [unowned self] text in
-                    self.userNameText.send(text)} )
+                    self.userNameText.send(text)})
             .store(in: &cancellables)
 
         output.loadingState.sink(receiveValue: { [unowned self] hasError in

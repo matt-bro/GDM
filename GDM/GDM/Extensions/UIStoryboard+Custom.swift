@@ -40,7 +40,7 @@ extension UIStoryboard {
         return vc
     }
 
-    private func couldNotFindSB(id:String, sbName: String) -> String {
+    private func couldNotFindSB(id: String, sbName: String) -> String {
         "Couldn't find \(id) in storyboard named \(sbName)"
     }
 }

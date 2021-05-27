@@ -30,7 +30,7 @@ final class UserListTVCViewModel: ViewModelType {
     struct Output {
         let finishedLoadingFollowers: AnyPublisher<LoadingState, Never>
         let followers: AnyPublisher<[CompactUserCellViewModel], Never>
-        let userChanged: AnyPublisher<String , Never>
+        let userChanged: AnyPublisher<String, Never>
     }
 
     struct Dependencies {
@@ -52,7 +52,6 @@ final class UserListTVCViewModel: ViewModelType {
     }
 
     func transform(input: Input) -> Output {
-
 
         let loadingState = $loadingState.eraseToAnyPublisher()
 
@@ -80,7 +79,7 @@ final class UserListTVCViewModel: ViewModelType {
             case .failure(let error): self.loadingState = .error(error)
             case .finished: print("Publisher is finished")
             }
-        }, receiveValue: { [unowned self] value in
+        }, receiveValue: { [unowned self] _ in
             self.followers = dependencies.db.getFollowers(self.dependencies.session.currentUserLogin)
             self.loadingState = .finished
         }).store(in: &cancellables)

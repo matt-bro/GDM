@@ -31,7 +31,7 @@ extension UIImageView: Cachable {}
 extension Cachable where Self: UIImageView {
 
     //5 creating the function
-    typealias SuccessCompletion = (Bool) -> ()
+    typealias SuccessCompletion = (Bool) -> Void
     func loadImageUsingCacheWithURLString(_ URLString: String, placeHolder: UIImage?, completion: @escaping SuccessCompletion) {
 
         self.image = nil
@@ -45,7 +45,7 @@ extension Cachable where Self: UIImageView {
         self.image = placeHolder
 
         if let url = URL(string: URLString) {
-            URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
+            URLSession.shared.dataTask(with: url, completionHandler: { (data, response, _) in
 
                 guard let httpResponse = response as? HTTPURLResponse else {
                     return

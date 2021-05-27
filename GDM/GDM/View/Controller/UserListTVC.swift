@@ -10,7 +10,6 @@ import Combine
 
 class UserListTVC: UIViewController {
 
-
     @IBOutlet var tableView: UITableView!
     private var viewModel: UserListTVCViewModel?
 
@@ -80,7 +79,7 @@ class UserListTVC: UIViewController {
                 self.showEmptyView(show: false)
             case .error(let e):
                 self.hideIndicator()
-                self.showToast(message:"\("loading.error".ll)\(e.localizedDescription)")
+                self.showToast(message: "\("loading.error".ll)\(e.localizedDescription)")
             case .loading:
                 self.showIndicator()
             case .empty:

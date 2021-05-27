@@ -25,7 +25,7 @@ extension UITextView {
             .publisher(for: UITextView.textDidChangeNotification, object: self)
             .map {
                 ($0.object as? UITextView)?.text  ?? ""
-                
+
             }
             .eraseToAnyPublisher()
     }

@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 class EmptyView: UIView {
 
     var titleLabel: UILabel?
@@ -58,13 +57,12 @@ class EmptyView: UIView {
             logo.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             logo.widthAnchor.constraint(equalToConstant: 150),
             logo.heightAnchor.constraint(equalTo: logo.widthAnchor),
-            logo.bottomAnchor.constraint(equalTo: titleLabel.topAnchor, constant: 5),
+            logo.bottomAnchor.constraint(equalTo: titleLabel.topAnchor, constant: 5)
         ]
         NSLayoutConstraint.activate(constraints)
     }
 
 }
-
 
 extension EmptyView {
 

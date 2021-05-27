@@ -146,7 +146,7 @@ class API: APIProtocol {
     ///     - date: whenw as the message sent
     /// - Returns:
     ///     - Decoded message or an error
-    func send(message: String, toId: Int, date:Date = Date(), _ database: DatabaseSavable? = nil) -> AnyPublisher<String, Error> {
+    func send(message: String, toId: Int, date: Date = Date(), _ database: DatabaseSavable? = nil) -> AnyPublisher<String, Error> {
         //self.receivedMessagePublisher.send(self.randomString(length: 5))
         return Just("")
             //.delay(for: 2, scheduler: RunLoop.main)
@@ -168,7 +168,7 @@ class API: APIProtocol {
     ///     - date: whenw as the message sent
     /// - Returns:
     ///     - Decoded message or an error
-    func receivedMessage(_ message: String = "",  toId: Int, date:Date = Date(), _ database: DatabaseSavable? = nil) -> AnyPublisher<MessageResponse, Error> {
+    func receivedMessage(_ message: String = "", toId: Int, date: Date = Date(), _ database: DatabaseSavable? = nil) -> AnyPublisher<MessageResponse, Error> {
         return Just(self.dummyReplyJSONString(message: message))
             .compactMap({$0.data(using: .utf8)})
             .delay(for: 1, scheduler: RunLoop.main)
@@ -176,7 +176,7 @@ class API: APIProtocol {
             .handleEvents(receiveSubscription: {
                 _ in
             }).map({
-                Database.shared.saveMessage(message: $0.message, fromId:toId , toId: AppSession.shared.currentUserId, date: Date())
+                Database.shared.saveMessage(message: $0.message, fromId: toId, toId: AppSession.shared.currentUserId, date: Date())
                 return $0
             })
             .eraseToAnyPublisher()
@@ -184,7 +184,7 @@ class API: APIProtocol {
 
     func randomString(length: Int) -> String {
       let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-      return String((0..<length).map{ _ in letters.randomElement()! })
+      return String((0..<length).map { _ in letters.randomElement()! })
     }
 
     func dummyReplyJSONString(message: String = "") -> String {
