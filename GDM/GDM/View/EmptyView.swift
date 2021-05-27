@@ -70,7 +70,7 @@ extension EmptyView {
         let emptyView = EmptyView(frame: .zero)
         emptyView.titleLabel?.text = "There are no messages here yet".ll
         emptyView.subTitleLabel?.text = "Be the first one to write a message!".ll
-        emptyView.logo?.image = #imageLiteral(resourceName: "empty 2-fmc")
+        emptyView.logo?.image = #imageLiteral(resourceName: "empty1")
         return emptyView
     }
 
