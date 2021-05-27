@@ -93,7 +93,6 @@ class API: APIProtocol {
             }
             .decode(type: [UserResponse].self, decoder: decoder)
             .handleEvents(receiveOutput: {
-                //print($0)
                 database?.saveUsers($0)
                 defaults?.lastMetaDataDate = Date()
             })
