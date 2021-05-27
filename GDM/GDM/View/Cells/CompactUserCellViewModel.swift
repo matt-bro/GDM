@@ -19,6 +19,13 @@ final class CompactUserCellViewModel {
         subtitle?.isEmpty ?? false
     }
 
+    var handle: String {
+        if let title = title {
+            return "@"+title
+        }
+        return ""
+    }
+
     init(id: Int, title: String?, avatarUrl: String?, subtitle: String?, date: String?) {
         self.id = id
         self.title = title

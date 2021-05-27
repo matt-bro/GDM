@@ -36,7 +36,7 @@ class CompactUserCell: UITableViewCell {
     }
 
     func setupViewModel() {
-        self.titleLabel?.text = viewModel?.title
+        self.titleLabel?.text = viewModel?.handle
         self.subtitleLabel?.text = viewModel?.subtitle
         self.dateLabel?.text = viewModel?.date
         self.stackView.isHidden = (viewModel?.subtitle?.isEmpty ?? true)

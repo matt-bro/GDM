@@ -1,8 +1,10 @@
 # Github DM
 
 ### Description
-Dear Developer, here you will find my implementation of the coding challenge.
-It is hard to explain my thought process in a readme, so I hope we will have the chance to have some discussions :)
+Dear Developer, 
+first of all thank you for taking you busy time to check my submission.
+It is hard to explain my thought process in a readme and there are a million things that can be done better, 
+so I hope we will have the chance to have some discussions :)
 
 ### How to use
 Tested with
@@ -21,6 +23,9 @@ No dependencies, the project should just run.
 
 ### Screenshots
 Under the folder 'Screenshots' you can find screenhots where you can see the app in light/dark mode and other language.
+
+### Concept
+Some scribbles under 'Concept'
 
 ### Architecture/Technology Choices
 - MVVM + Navigators
@@ -47,7 +52,19 @@ I made some unit tests that should be in the same place as the view models
 
 ### Considerations
 - Storyboards - Due to time constraints I have used one storyboard. In real projects I would either use a lot of seperated storyboards or generally setup the UI completely in code.
-- Chat UI - I made a quick implementation of a Chat UI with a TableView and a normal TextView as input which just gets pushed up by constraints. In a prod App this would need strongly to be changed to a CollectionView (for layout flexibility) and a proper AccessoryView subclass for handling input/keyboard/layout properly.
+- Chat UI - I made a quick implementation of a Chat UI with a TableView and a normal TextView as input which just gets pushed up by constraints. In a prod App this would need strongly to be changed to a CollectionView (for layout flexibility) and a proper AccessoryView subclass for handling input/keyboard/layout properly. Especially the Input implementation needs quite some fine tuning to feel right on all devices.
 
 
 ### Functional Requirements:
+
+- Show a list of users retrieved from any publicly available GitHub user account on the initial screen.
+- Make sure to show each user's GitHub handle (i.e., their account name with the '@' prefix) and their profile image on this screen.
+- Use the [GET users](https://developer.github.com/v3/users/#get-all-users) endpoint to retrieve the list of users.
+- Tapping any of these followers will transition to a direct messaging (DM) screen.
+- The user can virtually send/receive messages to/from the follower on the message screen.
+- Please do NOT actually call the GitHub API at this point.
+- Implement a dummy post and response.
+- The follower echoes a message sent by the user after a second.
+- The follower’s echo text repeats the user’s message twice, e.g. echo “Hi. Hi.” for message “Hi.”
+- Please refer to “Minimum Specifications for Screens” for UI specifications.
+- The app can be used in both portrait and landscape orientations.
