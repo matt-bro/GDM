@@ -7,9 +7,7 @@
 import UIKit
 import CoreData
 
-protocol DatabaseReadable {
-    //func getQuotes() -> [Currency]
-}
+protocol DatabaseReadable {}
 
 protocol DatabaseSavable {
     func saveUsers(_ userResponses: [UserResponse])
@@ -37,6 +35,9 @@ class Database: DatabaseReadable, DatabaseSavable {
         self.saveContext()
     }
 
+    ///Saves our currently selected user response
+    ///- Parameters:
+    ///  - userRespone: the decoded user response from api
     func saveUserDetail(userResponse: UserResponse) {
         self.deleteAllMessages()
         self.deleteAllUsers()
@@ -54,6 +55,8 @@ class Database: DatabaseReadable, DatabaseSavable {
         self.saveContext()
     }
 
+    ///Currently selected user info
+    /// - Returns: The User entity of the currently selected user
     func me() -> UserEntity? {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "UserEntity")
         let pred = NSPredicate(format: "isMe == true")
@@ -68,6 +71,10 @@ class Database: DatabaseReadable, DatabaseSavable {
         return nil
     }
 
+    ///Get a user for id
+    ///- Parameters:
+    ///  - id: user id
+    ///- Returns: UserEntity
     func user(forId id: Int) -> UserEntity? {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "UserEntity")
         let pred = NSPredicate(format: "id == \(id)")
@@ -82,6 +89,12 @@ class Database: DatabaseReadable, DatabaseSavable {
         return nil
     }
 
+    ///Save a  message local
+    ///- Parameters:
+    ///  - message: the message text
+    ///  - fromId: the sender id
+    ///  - toId: the receiver id
+    ///  - date: the sending date
     func saveMessage(message: String, fromId: Int, toId: Int, date: Date = Date()) {
         let managedContext = self.persistentContainer.viewContext
         let e = MessageEntity(context: managedContext)
@@ -97,6 +110,13 @@ class Database: DatabaseReadable, DatabaseSavable {
         self.saveContext()
     }
 
+    ///Get all messages between two users
+    ///- Parameters:
+    ///  - message: the message text
+    ///  - fromId: the sender id
+    ///  - toId: the receiver id
+    ///  - date: the sending date
+    ///- Returns: All relevant messages as array
     func getMessages(forUserId id: Int, partnerId: Int, afterDate date: Date? = nil) -> [MessageEntity] {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "MessageEntity")
         let pred1 = NSPredicate(format: "fromId == \(id) && toId == \(partnerId)")
@@ -190,7 +210,6 @@ class Database: DatabaseReadable, DatabaseSavable {
     }()
 
     // MARK: - Core Data Saving support
-
     func saveContext () {
         let context = persistentContainer.viewContext
         if context.hasChanges {

@@ -20,6 +20,7 @@ No dependencies, the project should just run.
 - Sending messages pushes the follower in the list to top
 - Localized UI (English, German, Japanese)
 - Light & Dark Mode
+- Should work with Accessibility Sizes
 
 ### Screenshots
 Under the folder 'Screenshots' you can find screenhots where you can see the app in light/dark mode and other language.
@@ -34,7 +35,7 @@ Some scribbles under 'Concept'
 - Storyboard
 
 Why MVVM + Navigators?
-1. First of all as you said we wan't to avoid massive view controllers. MVVM gives us some nice seperation between the viewcontroller and a viewmodel and therefore allows us to test our implementation easily.
+1. First of all as you said we want to avoid massive view controllers. MVVM gives us some nice seperation between the viewcontroller and a viewmodel and therefore allows us to test our implementation easily.
 2. The iOS community seems to embrace MVVM the most and also the new SwiftUI seems to do so. Therefore we can rely on a lot of community support.
 3. I once saw your team writing a blog post on MVVM and also assume that the team would be most comfortable with it
 4. Navigation is a big and important part that can get messy very quick. With defined navigators, we can directly see from code where navigation is supposed to go and also how the next views get set up.

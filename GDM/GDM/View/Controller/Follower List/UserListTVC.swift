@@ -28,7 +28,7 @@ class UserListTVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.title = "main.title".ll
+        self.title = "@"+AppSession.shared.currentUserLogin
 
         let dependencies = UserListTVCViewModel.Dependencies(
             api: API.shared,
@@ -36,7 +36,6 @@ class UserListTVC: UIViewController {
             nav: UserListTVCNavigator(navigationController: self.navigationController!),
             session: AppSession.shared
         )
-        self.title = "@"+AppSession.shared.currentUserLogin
 
         self.viewModel = UserListTVCViewModel(dependencies: dependencies)
 
@@ -44,7 +43,6 @@ class UserListTVC: UIViewController {
         self.bindViewModel()
         self.didLoad.send()
         self.activityIndicator.hidesWhenStopped = true
-
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -72,6 +70,9 @@ class UserListTVC: UIViewController {
         )
         let output = viewModel?.transform(input: input)
 
+        //after we loaded our followers hide activity indicator
+        //on error we show a toast
+        //on empty we show an empty screen
         output?.finishedLoadingFollowers.sink(receiveValue: {
             switch $0 {
             case .finished:
@@ -87,12 +88,15 @@ class UserListTVC: UIViewController {
             }
         }).store(in: &cancellables)
 
+        //after we got new followers we need to update our datasource
+        //if its empty show an empty screen
         output?.followers.sink(receiveValue: { [unowned self] followers in
             self.dataSource?.items = followers
             self.tableView.reloadData()
             self.showEmptyView(show: followers.count == 0)
         }).store(in: &cancellables)
 
+        //user change needs to update title
         output?.userChanged.sink(receiveValue: {
             self.title = "@\($0)"
         }).store(in: &cancellables)

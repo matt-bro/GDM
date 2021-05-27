@@ -33,11 +33,13 @@ class ChatVCViewModelTests: XCTestCase {
 
         let output = vm.transform(input: input)
 
+        //can we load followers
         let loadingWorked = self.expectation(description: "loading worked")
         output.finishedLoadingFollowers.sink(receiveValue: { _ in
             loadingWorked.fulfill()
         }).store(in: &cancellables)
 
+        //is a message valid
         let updateMessagesWorked = self.expectation(description: "valid message")
         output.isMessageValid.sink(receiveValue: { isValid in
             XCTAssertTrue(isValid)

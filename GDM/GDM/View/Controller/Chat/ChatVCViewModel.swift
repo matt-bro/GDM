@@ -12,7 +12,9 @@ final class ChatVCViewModel: ViewModelType {
 
     struct Input {
         let didLoad: PassthroughSubject<Void, Never>
+        //our input message text
         let messageText: AnyPublisher<String, Never>
+        //when we tap send
         let tapSend: UIControl.EventPublisher
     }
 
@@ -32,9 +34,13 @@ final class ChatVCViewModel: ViewModelType {
 
     private var cancellables = Set<AnyCancellable>()
     private let dependencies: Dependencies
+
+    //loaded messages from db
     @Published private(set) var messages: [MessageEntity] = []
+    //network loading state
     @Published private(set) var loadingState: LoadingState = .finished
-    @Published private(set) var messageText: String = "Hallo"
+    //text from input
+    @Published private(set) var messageText: String = "Hello"
 
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
@@ -44,6 +50,7 @@ final class ChatVCViewModel: ViewModelType {
 
         let loadingState = $loadingState.eraseToAnyPublisher()
 
+        //get our current ids from app session
         let currentUserId = dependencies.session.currentUserId
         let partnerId = dependencies.session.partnerId
 
@@ -51,12 +58,16 @@ final class ChatVCViewModel: ViewModelType {
             self.messages = self.dependencies.db.getMessages(forUserId: currentUserId, partnerId: partnerId)
         }).store(in: &cancellables)
 
+        //store our message text
         input.messageText.assign(to: \.messageText, on: self).store(in: &cancellables)
 
+        //enable send btn if the is some message
         let isMessageValid = $messageText.map({ text -> Bool in
             return text.isEmpty == false
         }).eraseToAnyPublisher()
 
+        //sending a message
+        //triggers then a reply and loads finally all messages
         input.tapSend
             .flatMap({
                 self.dependencies.api.send(message: self.messageText, toId: partnerId, self.dependencies.db)
@@ -71,6 +82,7 @@ final class ChatVCViewModel: ViewModelType {
             })
         .store(in: &cancellables)
 
+        //send our message
         let sendMessage = input.tapSend.map({ _ in
             self.messageText
         }).eraseToAnyPublisher()
@@ -79,10 +91,12 @@ final class ChatVCViewModel: ViewModelType {
             self.messages = self.dependencies.db.getMessages(forUserId: currentUserId, partnerId: partnerId)
         }).map({ _ in }).eraseToAnyPublisher()
 
+        //informs us about new messages and loads them
         self.dependencies.api.$receivedDate.sink(receiveValue: { _ in
             self.messages = self.dependencies.db.getMessages(forUserId: currentUserId, partnerId: partnerId)
         }).store(in: &cancellables)
 
+        //the messages for our chat as view models
         let messages = $messages.map({ messageEntities in
             messageEntities.map({ e in
                 MessageCellViewModel(id: Int(e.fromId), isMe: (e.fromId == currentUserId), message: e.text, date: e.sendDate)

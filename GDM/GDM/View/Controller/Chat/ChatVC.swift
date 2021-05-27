@@ -11,11 +11,11 @@ import Combine
 class ChatVC: UIViewController {
 
     var viewModel: ChatVCViewModel!
+
     private let didLoad = PassthroughSubject<Void, Never>()
     private var cancellables = [AnyCancellable]()
     private var dataSource: GenericDataSource<MessageCell, MessageCellViewModel>?
 
-   // @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var inputContainerBottomSpace: NSLayoutConstraint!
     @IBOutlet var messageTV: UITextView!
@@ -52,6 +52,9 @@ class ChatVC: UIViewController {
         let input = ChatVCViewModel.Input(didLoad: didLoad, messageText: messageTV.textPublisher(), tapSend: sendBtn.tapPublisher)
         let output = viewModel.transform(input: input)
 
+        //after we send a message
+        //we hide the keyboard, reset the text and disable the send btn
+        //we also update our tableview to scroll to the last message
         output.sendMessage.sink(receiveValue: {
             print("sending: \($0)")
             self.messageTV.resignFirstResponder()
@@ -60,10 +63,12 @@ class ChatVC: UIViewController {
             self.scrollToBottom()
         }).store(in: &cancellables)
 
+        //want to disable send btn for empty textfield
         output.isMessageValid
             .assign(to: \.isEnabled, on: sendBtn)
             .store(in: &cancellables)
 
+        //we received new messages so reload our datasource
         output.messages.sink(receiveValue: {
             self.updateDataSource(items: $0)
         }).store(in: &cancellables)
@@ -74,13 +79,20 @@ class ChatVC: UIViewController {
 
     }
 
+    //reload our datasource and tableview
     func updateDataSource(items: [MessageCellViewModel]) {
         self.dataSource?.items = items
         self.tableView.reloadData()
         self.scrollToBottom()
     }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
 }
 
+// MARK: - Handling appearing keyboard and scrolling tableView
 extension ChatVC {
     @objc func keyboardWillShow(notification: NSNotification) {
         let info = notification.userInfo!
@@ -96,6 +108,7 @@ extension ChatVC {
                 self.inputContainerBottomSpace.constant = 5
             })
     }
+
     func scrollToBottom() {
         if let dataSourceItems = self.dataSource?.items, dataSourceItems.count > 0 {
             let indexPath = IndexPath(item: dataSourceItems.count-1, section: 0)
