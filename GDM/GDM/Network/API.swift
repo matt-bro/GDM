@@ -31,7 +31,9 @@ class API: APIProtocol {
         //access key
         private static let accessKey = "6c16635ecdf56ac38045dded167ee369"
 
+        //get our user detail
         case user(login: String)
+        //followers of a selected user
         case followers(user: String)
 
         var url: URL {
@@ -49,15 +51,15 @@ class API: APIProtocol {
     let receivedMessagePublisher = PassthroughSubject<String, Never>()
     @Published var receivedDate: Date?
 
-    /// Get a list of quotes from the live service
+    /// Get a lfollowers for user
     ///
     /// - Parameters:
-    ///     - database: if provided saves quotes directly to database
+    ///     - userHandle: username that we want the followers for
+    ///     - database: if provided saves  directly to database
     ///     - defaults: if provided saves last update date to defaults
     ///     - force: usually a request can only be performed every 30 min, we can ignore it by force true
     /// - Returns:
-    ///     - Decoded quotes or an error
-
+    ///     - Decoded users or an error
     func followers(for userHandle: String, _ database: DatabaseSavable? = nil, _ defaults: UserDefaults? = nil, _ force: Bool = true) -> AnyPublisher<[UserResponse], Error> {
 
         //check if we are allowed to query
@@ -98,7 +100,16 @@ class API: APIProtocol {
             .eraseToAnyPublisher()
     }
 
-    func userDetail(for userHandle: String, _ database: DatabaseSavable? = nil, _ defaults: UserDefaults? = nil) -> AnyPublisher<UserResponse, Error> {
+    /// get detailed user info
+    ///
+    /// - Parameters:
+    ///     - userHandle: username that we want the followers for
+    ///     - database: if provided saves  directly to database
+    ///     - defaults: if provided saves last update date to defaults
+    ///     - session: the app session to update and notify ui to change
+    /// - Returns:
+    ///     - Decoded user or an error
+    func userDetail(for userHandle: String, _ database: DatabaseSavable? = nil, _ defaults: UserDefaults? = nil, _ session: AppSession? = nil) -> AnyPublisher<UserResponse, Error> {
 
         let url = Endpoint.user(login: userHandle).url
 
@@ -107,7 +118,7 @@ class API: APIProtocol {
         decoder.dateDecodingStrategy = .secondsSince1970
 
         return URLSession.shared.dataTaskPublisher(for: url)
-
+            .receive(on: DispatchQueue.main)
             //inform about network activity
             .tryMap { output in
                 guard let response = output.response as? HTTPURLResponse, response.statusCode == 200 else {
@@ -116,19 +127,26 @@ class API: APIProtocol {
                 return output.data
             }
             .decode(type: UserResponse.self, decoder: decoder)
-            .receive(on: DispatchQueue.main)
+
             .handleEvents(receiveOutput: {
                 //print($0)
                 database?.saveUserDetail(userResponse: $0)
-                AppSession.shared.currentUserLogin = $0.login
-                AppSession.shared.currentUserId = $0.id
+                session?.currentUserLogin = $0.login
+                session?.currentUserId = $0.id
                 defaults?.lastMetaDataDate = Date()
             })
-
             .eraseToAnyPublisher()
-
     }
 
+    /// Send message to user
+    ///
+    /// - Parameters:
+    ///     - message: username that we want the followers for
+    ///     - database: if provided saves  directly to database
+    ///     - toId: userid we are sending to
+    ///     - date: whenw as the message sent
+    /// - Returns:
+    ///     - Decoded message or an error
     func send(message: String, toId: Int, date:Date = Date(), _ database: DatabaseSavable? = nil) -> AnyPublisher<String, Error> {
         //self.receivedMessagePublisher.send(self.randomString(length: 5))
         return Just("")
@@ -142,6 +160,15 @@ class API: APIProtocol {
             }).map({ $0.message }).eraseToAnyPublisher()
     }
 
+    /// Get receive message from user
+    ///
+    /// - Parameters:
+    ///     - message: username that we want the followers for
+    ///     - database: if provided saves  directly to database
+    ///     - toId: userid we are sending to
+    ///     - date: whenw as the message sent
+    /// - Returns:
+    ///     - Decoded message or an error
     func receivedMessage(_ message: String = "",  toId: Int, date:Date = Date(), _ database: DatabaseSavable? = nil) -> AnyPublisher<MessageResponse, Error> {
         return Just(self.dummyReplyJSONString(message: message))
             .compactMap({$0.data(using: .utf8)})

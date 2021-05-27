@@ -17,7 +17,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right_bubble" translatesAutoresizingMaskIntoConstraints="NO" id="aet-eO-ItL">
-                        <rect key="frame" x="308.5" y="15" width="69.5" height="132"/>
+                        <rect key="frame" x="304.5" y="15" width="77.5" height="132"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JHr-6a-rnI">
                         <rect key="frame" x="322.5" y="25" width="41.5" height="112"/>
@@ -27,13 +27,13 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="aet-eO-ItL" firstAttribute="leading" secondItem="JHr-6a-rnI" secondAttribute="leading" constant="-14" id="0td-Td-sko"/>
+                    <constraint firstItem="aet-eO-ItL" firstAttribute="leading" secondItem="JHr-6a-rnI" secondAttribute="leading" constant="-18" id="0td-Td-sko"/>
                     <constraint firstItem="JHr-6a-rnI" firstAttribute="width" relation="lessThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.8" id="6iN-oF-jaM"/>
                     <constraint firstItem="aet-eO-ItL" firstAttribute="centerY" secondItem="JHr-6a-rnI" secondAttribute="centerY" id="Fjg-I2-Cqd"/>
                     <constraint firstAttribute="trailing" secondItem="JHr-6a-rnI" secondAttribute="trailing" constant="20" id="LRi-EO-XSJ"/>
                     <constraint firstItem="JHr-6a-rnI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="25" id="Rbw-dz-7h0"/>
                     <constraint firstItem="aet-eO-ItL" firstAttribute="height" secondItem="JHr-6a-rnI" secondAttribute="height" constant="20" id="Rup-l1-Tec"/>
-                    <constraint firstItem="aet-eO-ItL" firstAttribute="trailing" secondItem="JHr-6a-rnI" secondAttribute="trailing" constant="14" id="iK8-eD-OmI"/>
+                    <constraint firstItem="aet-eO-ItL" firstAttribute="trailing" secondItem="JHr-6a-rnI" secondAttribute="trailing" constant="18" id="iK8-eD-OmI"/>
                     <constraint firstItem="JHr-6a-rnI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" priority="1" constant="20" id="t0J-kt-IrZ"/>
                     <constraint firstAttribute="bottom" secondItem="JHr-6a-rnI" secondAttribute="bottom" constant="25" id="tzW-kZ-S0L"/>
                 </constraints>

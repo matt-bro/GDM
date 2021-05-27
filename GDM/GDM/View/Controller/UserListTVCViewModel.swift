@@ -18,10 +18,12 @@ final class UserListTVCViewModel: ViewModelType {
 
     struct Input {
         let didLoad: PassthroughSubject<Void, Never>
+        //selected a follower
         let selectRow: PassthroughSubject<Int, Never>
         //Refresh our data
         let refresh: PassthroughSubject<Bool, Never>
         let didAppear: PassthroughSubject<Void, Never>
+        //pressed go to profile
         let pressedProfile: PassthroughSubject<Void, Never>
     }
 
@@ -40,7 +42,9 @@ final class UserListTVCViewModel: ViewModelType {
 
     private var cancellables = Set<AnyCancellable>()
     private let dependencies: Dependencies
+    //our followers
     @Published private(set) var followers: [UserEntity] = []
+    //network loading state
     @Published private(set) var loadingState: LoadingState = .finished
 
     init(dependencies: Dependencies) {
@@ -58,22 +62,24 @@ final class UserListTVCViewModel: ViewModelType {
         }).store(in: &cancellables)
 
         if self.dependencies.db.me() == nil {
-            dependencies.api.userDetail(for: self.dependencies.session.currentUserLogin, self.dependencies.db)
+            dependencies.api.userDetail(for: self.dependencies.session.currentUserLogin, self.dependencies.db, nil, self.dependencies.session)
                 .sink(receiveCompletion: {_ in }, receiveValue: { _ in}).store(in: &cancellables)
         }
 
+        //we need to reload ui after user changes
         let userChanged = self.dependencies.session.$currentUserLogin.eraseToAnyPublisher()
 
+        //load our followers
         input.refresh.map({ _ -> AnyPublisher<[UserResponse], Error> in
             self.loadingState = .loading
             return self.dependencies.api.followers(for: self.dependencies.session.currentUserLogin, self.dependencies.db)
         })
         .switchToLatest()
         .sink(receiveCompletion: { completion in
-            switch completion {
-                                case .failure(let error): self.loadingState = .error(error)
-                                case .finished: print("Publisher is finished")
-                                }
+        switch completion {
+            case .failure(let error): self.loadingState = .error(error)
+            case .finished: print("Publisher is finished")
+            }
         }, receiveValue: { [unowned self] value in
             print(value)
             self.followers = dependencies.db.getFollowers(self.dependencies.session.currentUserLogin)
@@ -82,20 +88,12 @@ final class UserListTVCViewModel: ViewModelType {
 
         input.refresh.send(true)
 
+        //go to user profile screen
         input.pressedProfile.sink(receiveValue: {
             self.dependencies.nav.toUserProfile()
         }).store(in: &cancellables)
-//
-//        dependencies.api.followers(for: dependencies.session.currentUserLogin, self.dependencies.db)
-//            .sink(receiveCompletion: { completion in
-//                print(completion)
-////                self.loadingState = .error(completion)
-//        }, receiveValue: { [unowned self] value in
-//            print(value)
-//            self.followers = dependencies.db.getFollowers()
-//            self.loadingState = .finished
-//        }).store(in: &cancellables)
 
+        //load offline data initially if it exists
         input.didLoad.combineLatest(input.didAppear).sink(receiveValue: {
             _ in
 

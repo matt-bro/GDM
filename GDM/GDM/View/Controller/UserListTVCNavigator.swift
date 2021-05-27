@@ -22,7 +22,7 @@ final class UserListTVCNavigator: UserListTVCNavigatable {
     func toChat(userId: Int, partnerId: Int, partnerName: String?) {
         let vc = UIStoryboard.main.chatVC
 
-        vc.title = partnerName
+        vc.title = "@\(partnerName ?? "")"
 
         let api = API()
         let db = Database.shared

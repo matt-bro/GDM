@@ -13,6 +13,7 @@ class UserListTVC: UIViewController {
 
     @IBOutlet var tableView: UITableView!
     private var viewModel: UserListTVCViewModel?
+
     private let didLoad = PassthroughSubject<Void, Never>()
     private let didAppear = PassthroughSubject<Void, Never>()
     private let selectRow = PassthroughSubject<Int, Never>()
@@ -20,21 +21,10 @@ class UserListTVC: UIViewController {
     private let refresh = PassthroughSubject<Bool, Never>()
     private var cancellables = [AnyCancellable]()
     private var emptyView: UIView?
+
     private var dataSource: GenericDataSource<CompactUserCell, CompactUserCellViewModel>?
 
     let activityIndicator = UIActivityIndicatorView(style: .medium)
-
-
-    func showIndicator() {
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: self.activityIndicator)
-        self.activityIndicator.isHidden = false
-        self.activityIndicator.startAnimating()
-    }
-
-    func hideIndicator() {
-        self.activityIndicator.stopAnimating()
-        self.navigationItem.leftBarButtonItem = nil
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,9 +43,9 @@ class UserListTVC: UIViewController {
 
         self.setupTableView()
         self.bindViewModel()
-
-        self.activityIndicator.hidesWhenStopped = true
         self.didLoad.send()
+        self.activityIndicator.hidesWhenStopped = true
+
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -70,7 +60,6 @@ class UserListTVC: UIViewController {
             cell.viewModel = vm
         })
         self.tableView.dataSource = dataSource
-
         self.emptyView = EmptyView.noFollowers()
     }
 
@@ -92,11 +81,9 @@ class UserListTVC: UIViewController {
             case .error(let e):
                 self.hideIndicator()
                 self.showToast(message:"\("loading.error".ll)\(e.localizedDescription)")
-                //self.showEmptyView(show: true, error: e)
             case .loading:
                 self.showIndicator()
             case .empty:
-                //self.hideIndicator()
                 self.showEmptyView(show: true)
             }
             print($0)
@@ -113,6 +100,21 @@ class UserListTVC: UIViewController {
         }).store(in: &cancellables)
     }
 
+}
+
+extension UserListTVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let user = self.dataSource?.items[indexPath.row] {
+            self.selectRow.send(user.id)
+        }
+    }
+}
+
+extension UserListTVC {
+    @IBAction func pressedUserProfile() {
+        self.pressedProfile.send()
+    }
+
     func showEmptyView(show: Bool, error: Error? = nil) {
         guard let emptyView = self.emptyView else {
             return
@@ -126,15 +128,14 @@ class UserListTVC: UIViewController {
         }
     }
 
-    @IBAction func pressedUserProfile() {
-        self.pressedProfile.send()
+    func showIndicator() {
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: self.activityIndicator)
+        self.activityIndicator.isHidden = false
+        self.activityIndicator.startAnimating()
     }
-}
 
-extension UserListTVC: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let user = self.dataSource?.items[indexPath.row] {
-            self.selectRow.send(user.id)
-        }
+    func hideIndicator() {
+        self.activityIndicator.stopAnimating()
+        self.navigationItem.leftBarButtonItem = nil
     }
 }
