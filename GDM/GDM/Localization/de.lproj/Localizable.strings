@@ -9,3 +9,9 @@
 "Followers" = "Follower";
 "Following" = "Following";
 "switch.btn" = "Wechseln";
+
+"There are no messages here yet" = "There are no messages here yet";
+"Be the first one to write a message!" = "Be the first one to write a message!";
+
+"There are no followers here yet :(" = "There are no followers here yet :(";
+"Maybe try to refresh?" = "Maybe try to refresh?";

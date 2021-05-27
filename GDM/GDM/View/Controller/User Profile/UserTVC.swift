@@ -58,6 +58,7 @@ class UserTVC: UITableViewController {
 
         //tapping switch btn with valid text will lead to switching the user
         switchBtn.tapPublisher.sink(receiveValue: { [unowned self] _ in
+            self.userNameTf.resignFirstResponder()
             if let userName = self.userNameTf.text, userName.isEmpty == false {
                 AppSession.shared.currentUserLogin = userName
                 self.refresh.send(userName)

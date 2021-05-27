@@ -52,12 +52,11 @@ In its current state I would probably not use it as bigger strategy to move forw
 I made some unit tests that should be in the same place as the view models
 
 ### Considerations
-- Storyboards - Due to time constraints I have used one storyboard. In real projects I would either use a lot of seperated storyboards or generally setup the UI completely in code.
+- Storyboards - Due to time constraints I have used one storyboard. In real projects I would either use a lot of seperated storyboards or generally setup the UI completely in code. If you want to see me settings up constraints in code, my EmptyView would be one place to see it.
 - Chat UI - I made a quick implementation of a Chat UI with a TableView and a normal TextView as input which just gets pushed up by constraints. In a prod App this would need strongly to be changed to a CollectionView (for layout flexibility) and a proper AccessoryView subclass for handling input/keyboard/layout properly. Especially the Input implementation needs quite some fine tuning to feel right on all devices.
 
 
 ### Functional Requirements:
-
 - Show a list of users retrieved from any publicly available GitHub user account on the initial screen.
 - Make sure to show each user's GitHub handle (i.e., their account name with the '@' prefix) and their profile image on this screen.
 - Use the [GET users](https://developer.github.com/v3/users/#get-all-users) endpoint to retrieve the list of users.

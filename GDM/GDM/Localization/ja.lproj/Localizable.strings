@@ -10,3 +10,9 @@
 "Followers" = "フォロワー";
 "Following" = "フォローする";
 "switch.btn" = "変更する";
+
+"There are no messages here yet" = "ここにはまだメッセージがありません";
+"Be the first one to write a message!" = "メッセージを書く最初の人になりましょう！";
+
+"There are no followers here yet :(" = "ここにはまだフォロワーがいません :(";
+"Maybe try to refresh?" = "";

@@ -31,6 +31,10 @@ class MessageCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
+    //dependend on the message type either sent or not
+    //we will know just update the constraints of textlabel
+    //so it will hug either left/right
+    //also just change the image based on that
     func messageType(isSentMessage: Bool) {
         if isSentMessage {
             messageLabelLeadingConstraint.isActive = false
@@ -43,6 +47,7 @@ class MessageCell: UITableViewCell {
         }
     }
 
+    //need cap insets for correct image scaling
     func changeImage(_ name: String) {
         guard let image = UIImage(named: name) else { return }
         bubbleImageView.image = image
