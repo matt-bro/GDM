@@ -86,7 +86,6 @@ class UserListTVC: UIViewController {
             case .empty:
                 self.showEmptyView(show: true)
             }
-            print($0)
         }).store(in: &cancellables)
 
         output?.followers.sink(receiveValue: { [unowned self] followers in

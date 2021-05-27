@@ -81,7 +81,6 @@ final class UserListTVCViewModel: ViewModelType {
             case .finished: print("Publisher is finished")
             }
         }, receiveValue: { [unowned self] value in
-            print(value)
             self.followers = dependencies.db.getFollowers(self.dependencies.session.currentUserLogin)
             self.loadingState = .finished
         }).store(in: &cancellables)
