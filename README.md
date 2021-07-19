@@ -1,9 +1,5 @@
 # Github DM
 
-<p align="center">
-<img src="https://raw.githubusercontent.com/matt-bro/GDM/main/Screenshots/Simulator%20Screen%20Shot%20-%20iPhone%2012%20Pro%20-%202021-05-27%20at%2016.10.51.png" width="225" height="400">
-</p>
-
 ### Description
 A fake Github chat client to test a range of Swift combine features with UIKit.
 
