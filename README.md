@@ -1,5 +1,7 @@
 # Github DM
 
+[![Unit Tests](https://github.com/matt-bro/GDM/actions/workflows/swift.yml/badge.svg?branch=main)](https://github.com/matt-bro/GDM/actions/workflows/swift.yml)
+
 ### Description
 A fake Github chat client to test a range of Swift combine features with UIKit.
 
